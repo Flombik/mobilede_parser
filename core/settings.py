@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,7 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    # celery
+    'django_celery_results',
+    'django_celery_beat',
+    # apps
     'telegram_user',
     'mobilede_parser',
 ]
@@ -57,8 +61,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,6 +126,27 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Celery settings
+CELERY_TIMEZONE = 'Europe/Moscow'
+CELERY_RESULT_BACKEND = 'django-db'
+# CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
+
+# CELERY_DEFAULT_QUEUE = 'default'
+# CELERY_DEFAULT_ROUTING_KEY = 'default'
+
+# CELERY_QUEUES = (
+#     Queue('default'),
+#     Queue('selenium'),
+# )
+# CELERY_TASK_ROUTES = {
+#     'wb_refresher.tasks.download_reports': {'queue': 'selenium'},
+#     'wb_refresher.tasks.download_report': {'queue': 'selenium'},
+# }
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+# Parser settings
 
 PARSER_USER_AGENTS_LIST = [
     # Chrome

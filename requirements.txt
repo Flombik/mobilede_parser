@@ -2,3 +2,6 @@ lxml
 beautifulsoup4
 requests
 django
+celery
+django-celery-beat
+django-celery-results
