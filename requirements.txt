@@ -2,6 +2,6 @@ lxml
 beautifulsoup4
 requests
 django
-celery
+celery[redis]
 django-celery-beat
 django-celery-results

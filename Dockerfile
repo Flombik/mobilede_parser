@@ -9,11 +9,13 @@ RUN apt-get update && \
     apt install -y netcat && \
     apt clean
 
-COPY requirements.txt /code/
 RUN python -m pip install --upgrade pip
 RUN pip install psycopg2-binary gunicorn
+COPY requirements.txt /code/
 RUN pip install -r requirements.txt
 
 COPY web-entrypoint.sh /code/web-entrypoint.sh
+COPY worker-entrypoint.sh /code/worker-entrypoint.sh
+COPY beat-entrypoint.sh /code/beat-entrypoint.sh
 
 COPY . /code

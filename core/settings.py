@@ -132,22 +132,9 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Celery settings
-CELERY_TIMEZONE = 'Europe/Moscow'
+CELERY_TIMEZONE = TIME_ZONE
 CELERY_RESULT_BACKEND = 'django-db'
-# CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
-
-# CELERY_DEFAULT_QUEUE = 'default'
-# CELERY_DEFAULT_ROUTING_KEY = 'default'
-
-# CELERY_QUEUES = (
-#     Queue('default'),
-#     Queue('selenium'),
-# )
-# CELERY_TASK_ROUTES = {
-#     'wb_refresher.tasks.download_reports': {'queue': 'selenium'},
-#     'wb_refresher.tasks.download_report': {'queue': 'selenium'},
-# }
-
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 # Parser settings

@@ -3,7 +3,6 @@ version: "3.8"
 services:
   web:
     build: .
-    working_dir: /code
     command: ./web-entrypoint.sh
     ports:
       - "8000:8000"
@@ -15,6 +14,26 @@ services:
     depends_on:
       - db
 
+  worker:
+    build: .
+    command: ./worker-entrypoint.sh
+    env_file:
+      - .env
+    restart: unless-stopped
+    depends_on:
+      - db
+      - broker
+
+  beat:
+    build: .
+    command: ./beat-entrypoint.sh
+    env_file:
+      - .env
+    restart: unless-stopped
+    depends_on:
+      - db
+      - broker
+
   db:
     image: postgres
     environment:
@@ -25,5 +44,9 @@ services:
       - db_data:/var/lib/postgresql/data
     restart: unless-stopped
 
+  broker:
+    image: redis
+
 volumes:
   db_data:
+  static_files:
