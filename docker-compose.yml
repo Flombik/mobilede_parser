@@ -1,14 +1,24 @@
 version: "3.8"
 
 services:
+  nginx:
+    image: nginx
+    ports:
+      - "8000:80"
+    volumes:
+      - staticfiles:/usr/src/app/staticfiles/
+      - ./nginx_conf:/etc/nginx/conf.d/
+    restart: unless-stopped
+    depends_on:
+      - web
+
   web:
     build: .
     working_dir: /code
     command: ./web-entrypoint.sh
-    ports:
-      - "8000:8000"
     volumes:
       - .:/code
+      - staticfiles:/code/staticfiles/
     env_file:
       - .env
     restart: unless-stopped
@@ -27,3 +37,4 @@ services:
 
 volumes:
   db_data:
+  staticfiles:
