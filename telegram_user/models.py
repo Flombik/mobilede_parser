@@ -6,7 +6,6 @@ from django.utils.translation import gettext_lazy as _
 from .managers import TelegramUserManager
 
 
-# Create your models here.
 class TelegramUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(
         _('username'),
@@ -33,6 +32,7 @@ class TelegramUser(AbstractBaseUser, PermissionsMixin):
     )
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     _photo_url = models.URLField(_('photo url'), max_length=2048, db_column='photo_url', blank=True)
+    telegram_id = models.PositiveIntegerField(_('telegram id'), unique=True, null=True, blank=True)
 
     objects = TelegramUserManager()
 

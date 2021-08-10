@@ -2,3 +2,4 @@ lxml
 beautifulsoup4
 requests
 django
+furl
