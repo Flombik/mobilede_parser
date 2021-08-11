@@ -188,12 +188,16 @@ class Ad(models.Model):
 
 @receiver(pre_delete, sender=Search)
 def searches_changed(sender, instance, *args, **kwargs):
-    # TODO: optimize DB queries; may be with this code, but alias()/annotate() is not working as should
-    # ads_to_delete = instance.ad_set.alias(searches_count=Count('searches')).filter(searches_count__exact=1)
-    # ads_to_delete.delete()
+    sql_query = (
+        "SELECT ad_id as site_id "
+        "FROM mobilede_parser_ad_searches "
+        f"WHERE ad_id IN (SELECT ad_id FROM mobilede_parser_ad_searches WHERE search_id = '{instance.pk}') "
+        "GROUP BY ad_id "
+        "HAVING COUNT(*) = 1;"
+    )
     with atomic():
-        for ad in instance.ad_set.all():
-            if ad.searches.count() == 1:
-                ad.delete()
+        ads_to_delete = instance.ad_set.raw(sql_query)
+        ads_to_delete = instance.ad_set.filter(pk__in=ads_to_delete)
+        ads_to_delete.delete()
 
 # https://suchen.mobile.de/fahrzeuge/search.html?damageUnrepaired=NO_DAMAGE_UNREPAIRED&features=ELECTRIC_HEATED_SEATS&features=MULTIFUNCTIONAL_WHEEL&fuels=DIESEL&grossPrice=true&isSearchRequest=true&makeModelVariant1.makeId=25200&makeModelVariant1.modelId=14&maxCubicCapacity=1600&maxPrice=10500&minFirstRegistrationDate=2016-01-01&scopeId=C&sortOption.sortBy=creationTime&sortOption.sortOrder=DESCENDING&sset=1627887194&ssid=10261689&transmissions=MANUAL_GEAR&vatable=true
