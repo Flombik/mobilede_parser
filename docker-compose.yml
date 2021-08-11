@@ -4,7 +4,7 @@ services:
   nginx:
     image: nginx
     ports:
-      - "8000:80"
+      - "80:80"
     volumes:
       - staticfiles:/usr/src/app/staticfiles/
       - ./nginx_conf:/etc/nginx/conf.d/
