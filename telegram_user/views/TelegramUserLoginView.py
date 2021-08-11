@@ -13,6 +13,7 @@ from django.contrib.auth.views import LoginView
 @cache
 def get_telegram_bot_data():
     response = requests.get(f'https://api.telegram.org/bot{settings.TELEGRAM_BOT_TOKEN}/getMe')
+    response.raise_for_status()
     response = response.json()
     return response['result']
 
