@@ -66,14 +66,21 @@ class TelegramUser(AbstractBaseUser, PermissionsMixin):
 
     def notify(self, message: str, **kwargs):
         """Send a telegram message via bot to this user."""
-        message_parse_mode = kwargs.get('parse_mode') or 'MarkdownV2'
+        message_parse_mode = kwargs.get('parse_mode') or None
 
         request_url = f'https://api.telegram.org/bot{settings.TELEGRAM_BOT_TOKEN}/sendMessage'
         request_data = {
             'chat_id': self.telegram_id,
             'text': message,
-            'parse_mode': message_parse_mode,
         }
+        if message_parse_mode is not None:
+            request_data.update({
+                'parse_mode': message_parse_mode,
+            })
 
         response = requests.post(request_url, json=request_data)
-        response.raise_for_status()
+        try:
+            response.raise_for_status()
+        except Exception as e:
+            print(response.json())
+            raise e

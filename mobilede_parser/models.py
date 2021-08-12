@@ -12,13 +12,22 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.db.models import Value, F, Count
+from django.db.models import Value, F
 from django.db.models.functions import Ceil
 from django.db.models.signals import pre_delete
 from django.db.transaction import atomic
 from django.dispatch import receiver
 
+from telegram_user.tasks import notify_user as async_notify_user
+
 DB_CHUNK_SIZE = 5000
+
+MESSAGE_TEMPLATE = """{first_name}, hello!
+
+We found new car from your favorites searches!
+Link bellow:
+
+{link}"""
 
 
 class Search(models.Model):
@@ -142,11 +151,20 @@ class Search(models.Model):
                 yield itr[i:i + n]
 
         ads_chunks = chunkify(ads, DB_CHUNK_SIZE)
+        created_ads = []
         for ads_chunk in ads_chunks:
             with atomic():
                 for ad in ads_chunk:
                     site_id = ad.pop('site_id')
-                    self.ad_set.update_or_create(site_id=site_id, defaults=ad)
+                    ad_obj, created = self.ad_set.update_or_create(site_id=site_id, defaults=ad)
+                    if created:
+                        created_ads.append(ad_obj)
+
+        for ad in created_ads:
+            for search in ad.searches.all():
+                for user in search.subscribers.all():
+                    message = MESSAGE_TEMPLATE.format(first_name=user.get_short_name(), link=ad.url)
+                    async_notify_user.delay(user.pk, message)
 
     def parse_ads(self):
         num_of_pages = self._get_num_of_pages()
