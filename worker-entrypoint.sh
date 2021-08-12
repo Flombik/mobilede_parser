@@ -11,8 +11,8 @@ then
     echo "PostgreSQL started"
 fi
 
-#python manage.py makemigrations
-python manage.py migrate
-gunicorn core.wsgi:application --reload --bind 0.0.0.0:8000 --timeout 120
+export CELERY_BROKER_URL=$BROKER_URL
+
+celery -A core worker -l INFO
 
 exec "$@"

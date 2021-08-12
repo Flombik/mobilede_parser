@@ -14,7 +14,6 @@ services:
 
   web:
     build: .
-    working_dir: /code
     command: ./web-entrypoint.sh
     volumes:
       - .:/code
@@ -25,6 +24,26 @@ services:
     depends_on:
       - db
 
+  worker:
+    build: .
+    command: ./worker-entrypoint.sh
+    env_file:
+      - .env
+    restart: unless-stopped
+    depends_on:
+      - db
+      - broker
+
+  beat:
+    build: .
+    command: ./beat-entrypoint.sh
+    env_file:
+      - .env
+    restart: unless-stopped
+    depends_on:
+      - db
+      - broker
+
   db:
     image: postgres
     environment:
@@ -34,6 +53,9 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     restart: unless-stopped
+
+  broker:
+    image: redis
 
 volumes:
   db_data:

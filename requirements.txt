@@ -3,3 +3,6 @@ beautifulsoup4
 requests
 django
 furl
+celery[redis]
+django-celery-beat
+django-celery-results
