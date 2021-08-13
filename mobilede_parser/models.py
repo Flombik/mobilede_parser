@@ -80,7 +80,7 @@ class Search(models.Model):
             page = self._get_page_by_num(page)
         soup = BeautifulSoup(page, 'lxml')
         content = soup.find('div', 'cBox--resultList')
-        page_ads = content.find_all('div', 'cBox-body--resultitem')
+        page_ads = content.find_all('div', re.compile(r'cBox-body--(?:resultitem|eyeCatcher)'))
         ads = []
         for ad in page_ads:
             url = ad.find('a').get('href')
@@ -141,6 +141,7 @@ class Search(models.Model):
             for i in range(0, len(itr), n):
                 yield itr[i:i + n]
 
+        # TODO: think about including existed ads to "search obj" if they in results
         ads_chunks = chunkify(ads, DB_CHUNK_SIZE)
         for ads_chunk in ads_chunks:
             with atomic():
