@@ -1,0 +1,676 @@
+{
+  "select": {
+    "makeModelVariant1.makeId": {},
+    "makeModelVariant1.modelId": {},
+    "makeModelVariantExclusions[0].makeId": {},
+    "makeModelVariantExclusions[0].modelId": {},
+    "minSeats": {
+      "": "Any",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9"
+    },
+    "maxSeats": {
+      "": "Any",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9"
+    },
+    "doorCount": {
+      "": "Any",
+      "TWO_OR_THREE": "2/3",
+      "FOUR_OR_FIVE": "4/5",
+      "SIX_OR_SEVEN": "6/7"
+    },
+    "sld": {
+      "": "Any",
+      "SLIDING_DOOR_RIGHT": "Sliding door right",
+      "SLIDING_DOOR_LEFT": "Sliding door left",
+      "SLIDING_DOOR_BOTH_SIDED": "Sliding door both-sided"
+    },
+    "minFirstRegistrationDate": {
+      "": "Any",
+      "2021": "2021",
+      "2020": "2020",
+      "2019": "2019",
+      "2018": "2018",
+      "2017": "2017",
+      "2016": "2016",
+      "2015": "2015",
+      "2014": "2014",
+      "2013": "2013",
+      "2012": "2012",
+      "2011": "2011",
+      "2010": "2010",
+      "2009": "2009",
+      "2008": "2008",
+      "2007": "2007",
+      "2006": "2006",
+      "2005": "2005",
+      "2004": "2004",
+      "2003": "2003",
+      "2002": "2002",
+      "2001": "2001",
+      "2000": "2000",
+      "1999": "1999",
+      "1998": "1998",
+      "1997": "1997",
+      "1996": "1996",
+      "1995": "1995",
+      "1994": "1994",
+      "1993": "1993",
+      "1992": "1992",
+      "1991": "1991",
+      "1990": "1990",
+      "1985": "1985",
+      "1980": "1980",
+      "1975": "1975",
+      "1970": "1970",
+      "1965": "1965",
+      "1960": "1960",
+      "1900": "1900"
+    },
+    "maxFirstRegistrationDate": {
+      "": "Any",
+      "2021": "2021",
+      "2020": "2020",
+      "2019": "2019",
+      "2018": "2018",
+      "2017": "2017",
+      "2016": "2016",
+      "2015": "2015",
+      "2014": "2014",
+      "2013": "2013",
+      "2012": "2012",
+      "2011": "2011",
+      "2010": "2010",
+      "2009": "2009",
+      "2008": "2008",
+      "2007": "2007",
+      "2006": "2006",
+      "2005": "2005",
+      "2004": "2004",
+      "2003": "2003",
+      "2002": "2002",
+      "2001": "2001",
+      "2000": "2000",
+      "1999": "1999",
+      "1998": "1998",
+      "1997": "1997",
+      "1996": "1996",
+      "1995": "1995",
+      "1994": "1994",
+      "1993": "1993",
+      "1992": "1992",
+      "1991": "1991",
+      "1990": "1990",
+      "1985": "1985",
+      "1980": "1980",
+      "1975": "1975",
+      "1970": "1970",
+      "1965": "1965",
+      "1960": "1960",
+      "1900": "1900"
+    },
+    "minMileage": {
+      "": "Any",
+      "5000": "5,000 km",
+      "10000": "10,000 km",
+      "20000": "20,000 km",
+      "30000": "30,000 km",
+      "40000": "40,000 km",
+      "50000": "50,000 km",
+      "60000": "60,000 km",
+      "70000": "70,000 km",
+      "80000": "80,000 km",
+      "90000": "90,000 km",
+      "100000": "100,000 km",
+      "125000": "125,000 km",
+      "150000": "150,000 km"
+    },
+    "maxMileage": {
+      "": "Any",
+      "5000": "5,000 km",
+      "10000": "10,000 km",
+      "20000": "20,000 km",
+      "30000": "30,000 km",
+      "40000": "40,000 km",
+      "50000": "50,000 km",
+      "60000": "60,000 km",
+      "70000": "70,000 km",
+      "80000": "80,000 km",
+      "90000": "90,000 km",
+      "100000": "100,000 km",
+      "125000": "125,000 km",
+      "150000": "150,000 km",
+      "200000": "200,000 km"
+    },
+    "minHu": {
+      "": "Any",
+      "0": "New",
+      "18": "18",
+      "12": "12",
+      "9": "9",
+      "6": "6",
+      "3": "3"
+    },
+    "numberOfPreviousOwners": {
+      "": "Any",
+      "1": "Up to 1",
+      "2": "Up to 2",
+      "3": "Up to 3",
+      "4": "Up to 4"
+    },
+    "cn": {},
+    "ambit-search-radius": {
+      "10": "10 km",
+      "20": "20 km",
+      "50": "50 km",
+      "100": "100 km",
+      "200": "200 km",
+      "500": "500 km"
+    },
+    "minPowerAsArray": {
+      "": "Any",
+      "25": "25 kW",
+      "37": "37 kW",
+      "44": "44 kW",
+      "55": "55 kW",
+      "66": "66 kW",
+      "74": "74 kW",
+      "87": "7 kW",
+      "96": "96 kW",
+      "110": "10 kW",
+      "147": "147 kW",
+      "185": "185 kW",
+      "223": "223 kW",
+      "263": "263 kW",
+      "296": "296 kW",
+      "334": "334 kW"
+    },
+    "maxPowerAsArray": {
+      "": "Any",
+      "24": "24 kW",
+      "36": "36 kW",
+      "43": "43 kW",
+      "54": "54 kW",
+      "65": "65 kW",
+      "73": "73 kW",
+      "86": "86 kW",
+      "95": "95 kW",
+      "109": "109 kW",
+      "146": "146 kW",
+      "184": "184 kW",
+      "222": "222 kW",
+      "262": "262 kW",
+      "295": "295 kW",
+      "333": "333 kW"
+    },
+    "minCubicCapacity": {
+      "": "Any",
+      "1000": "1,000 cm³",
+      "1200": "1,200 cm³",
+      "1400": "1,400 cm³",
+      "1600": "1,600 cm³",
+      "1800": "1,800 cm³",
+      "2000": "2,000 cm³",
+      "2600": "2,600 cm³",
+      "3000": "3,000 cm³",
+      "5000": "5,000 cm³",
+      "7500": "7,500 cm³",
+      "8000": "8,000 cm³",
+      "9000": "9,000 cm³"
+    },
+    "maxCubicCapacity": {
+      "": "Any",
+      "1000": "1,000 cm³",
+      "1200": "1,200 cm³",
+      "1400": "1,400 cm³",
+      "1600": "1,600 cm³",
+      "1800": "1,800 cm³",
+      "2000": "2,000 cm³",
+      "2600": "2,600 cm³",
+      "3000": "3,000 cm³",
+      "5000": "5,000 cm³",
+      "7500": "7,500 cm³",
+      "8000": "8,000 cm³",
+      "9000": "9,000 cm³"
+    },
+    "maxConsumptionCombined": {
+      "": "Any",
+      "3": "3 l/100km",
+      "5": "5 l/100km",
+      "6": "6 l/100km",
+      "7": "7 l/100km",
+      "8": "8 l/100km",
+      "9": "9 l/100km",
+      "10": "10 l/100km",
+      "12": "12 l/100km",
+      "15": "15 l/100km"
+    },
+    "emissionsSticker": {
+      "": "Any",
+      "EMISSIONSSTICKER_NONE": "1 (None)",
+      "EMISSIONSSTICKER_RED": "2 (Red)",
+      "EMISSIONSSTICKER_YELLOW": "3 (Yellow)",
+      "EMISSIONSSTICKER_GREEN": "4 (Green)"
+    },
+    "emissionClass": {
+      "": "Any",
+      "EURO1": "Euro1",
+      "EURO2": "Euro2",
+      "EURO3": "Euro3",
+      "EURO4": "Euro4",
+      "EURO5": "Euro5",
+      "EURO6": "Euro6",
+      "EURO6C": "Euro6c",
+      "EURO6D_TEMP": "Euro6d-TEMP",
+      "EURO6D": "Euro6d"
+    },
+    "minBatteryCapacity": {
+      "": "Any",
+      "10": "10 kWh",
+      "20": "20 kWh",
+      "30": "30 kWh",
+      "40": "40 kWh",
+      "50": "50 kWh",
+      "60": "60 kWh",
+      "70": "70 kWh",
+      "80": "80 kWh",
+      "90": "90 kWh",
+      "100": "100 kWh"
+    },
+    "maxBatteryCapacity": {
+      "": "Any",
+      "10": "10 kWh",
+      "20": "20 kWh",
+      "30": "30 kWh",
+      "40": "40 kWh",
+      "50": "50 kWh",
+      "60": "60 kWh",
+      "70": "70 kWh",
+      "80": "80 kWh",
+      "90": "90 kWh",
+      "100": "100 kWh"
+    },
+    "damageUnrepaired": {
+      "ALSO_DAMAGE_UNREPAIRED": "Any",
+      "NO_DAMAGE_UNREPAIRED": "Do not show",
+      "ONLY_DAMAGE_UNREPAIRED": "Only show"
+    },
+    "export": {
+      "": "Any",
+      "NO_EXPORT": "Do not show",
+      "ONLY_EXPORT": "Only show"
+    },
+    "usedCarSeals": {
+      "": "Please select",
+      "Any": "Any approved label",
+      "ASTON_MARTIN": "Aston Martin Timeless",
+      "BMW": "BMW Premium Selection",
+      "BENTLEY": "Certified by Bentley",
+      "CITROEN": "CITROËN select",
+      "DS_CERTIFIED": "DS Certified",
+      "DS_ZERTIFIZIERTE_GEBRAUCHTWAGEN": "DS Zertifizierte Gebrauchtwagen",
+      "FERRARI": "Ferrari Approved",
+      "HYUNDAI_PROMISE": "Hyundai Promise",
+      "JAGUAR": "Jaguar APPROVED",
+      "LANDROVER": "Land Rover APPROVED",
+      "MERCEDES_TRANSPORTER": "Mercedes-Benz Junge Sterne Transporter",
+      "MINI": "MINI Gebrauchtwagen Next",
+      "NISSAN": "NISSANCOLLECTION",
+      "OPEL": "OPEL ZERTIFIZIERTE GEBRAUCHTWAGEN",
+      "PEUGEOT": "PEUGEOT Qualitäts-Gebrauchtwagen",
+      "PORSCHE": "Porsche Approved",
+      "SEAT": "SEAT \"Das Weltauto\"",
+      "LAMBORGHINI": "Selezione Lamborghini Certified Pre-Owned",
+      "SKODA": "ŠKODA Plus",
+      "VW": "Volkswagen \"Das WeltAuto\"",
+      "VW_TRADEPORT": "Volkswagen TradePort",
+      "VOLVO": "VOLVO SELEKT"
+    }
+  },
+  "text": {
+    "makeModelVariant1.modelDescription": {
+      "null": "Variant"
+    },
+    "null": {
+      "null": "City / zip code"
+    }
+  },
+  "checkbox": {
+    "categories": {
+      "Cabrio": null,
+      "EstateCar": null,
+      "Limousine": null,
+      "SmallCar": null,
+      "SportsCar": null,
+      "OffRoad": null,
+      "Van": null,
+      "OtherCar": null
+    },
+    "usage": {
+      "NEW": "New",
+      "USED": "Used"
+    },
+    "usageType": {
+      "PRE_REGISTRATION": "Pre-Registration",
+      "EMPLOYEES_CAR": "Employee's Car",
+      "CLASSIC": "Classic Vehicle",
+      "DEMONSTRATION": "Demonstration Vehicle"
+    },
+    "features": {
+      "FULL_SERVICE_HISTORY": "Full Service History",
+      "HYBRID_PLUGIN": "Fuel Type",
+      "PARTICULATE_FILTER_DIESEL": null,
+      "METALLIC": "Metallic",
+      "ABS": "Others",
+      "AIR_SUSPENSION": "Others",
+      "ALLOY_WHEELS": "Others",
+      "ALL_SEASON_TIRES": "Others",
+      "BLIND_SPOT_MONITOR": "Others",
+      "CENTRAL_LOCKING": "Others",
+      "DISTANCE_WARNING_SYSTEM": "Others",
+      "ELECTRIC_TAILGATE": "Others",
+      "COLLISION_AVOIDANCE": "Others",
+      "ESP": "Others",
+      "FRONT_FOG_LIGHTS": "Others",
+      "FOUR_WHEEL_DRIVE": "Others",
+      "GLARE_FREE_HIGH_BEAM": "Others",
+      "HEADLIGHT_WASHER_SYSTEM": "Others",
+      "HEATED_WINDSHIELD": "Others",
+      "HIGH_BEAM_ASSIST": "Others",
+      "HILL_START_ASSIST": "Others",
+      "IMMOBILIZER": "Others",
+      "KEYLESS_ENTRY": "Others",
+      "LANE_DEPARTURE_WARNING": "Others",
+      "LIGHT_SENSOR": "Others",
+      "NIGHT_VISION_ASSIST": "Others",
+      "PANORAMIC_GLASS_ROOF": "Others",
+      "POWER_ASSISTED_STEERING": "Others",
+      "AUTOMATIC_RAIN_SENSOR": "Others",
+      "ROOF_RAILS": "Others",
+      "SPEED_LIMITER": "Others",
+      "SPORT_PACKAGE": "Others",
+      "PERFORMANCE_HANDLING_SYSTEM": "Others",
+      "START_STOP_SYSTEM": "Others",
+      "STEEL_WHEELS": "Others",
+      "SUMMER_TIRES": "Others",
+      "SUNROOF": "Others",
+      "TRACTION_CONTROL_SYSTEM": "Others",
+      "TRAFFIC_SIGN_RECOGNITION": "Others",
+      "TIRE_PRESSURE_MONITORING": "Others",
+      "WINTER_TIRES": "Others",
+      "ALARM_SYSTEM": "Extras",
+      "AMBIENT_LIGHTING": "Extras",
+      "ANDROID_AUTO": "Extras",
+      "CARPLAY": "Extras",
+      "ARM_REST": "Extras",
+      "DIMMING_INTERIOR_MIRROR": "Extras",
+      "AUXILIARY_HEATING": "Extras",
+      "BLUETOOTH": "Extras",
+      "CARGO_BARRIER": "Extras",
+      "CD_PLAYER": "Extras",
+      "DIGITAL_COCKPIT": "Extras",
+      "DISABLED_ACCESSIBLE": "Extras",
+      "ELECTRIC_BACKSEAT_ADJUSTMENT": "Extras",
+      "ELECTRIC_ADJUSTABLE_SEATS": "Extras",
+      "ELECTRIC_EXTERIOR_MIRRORS": "Extras",
+      "ELECTRIC_WINDOWS": "Extras",
+      "EMERGENCY_CALL_SYSTEM": "Extras",
+      "FATIGUE_WARNING_SYSTEM": "Extras",
+      "FOLD_FLAT_PASSENGER_SEAT": "Extras",
+      "HANDS_FREE_PHONE_SYSTEM": "Extras",
+      "HEAD_UP_DISPLAY": "Extras",
+      "ELECTRIC_HEATED_REAR_SEATS": "Extras",
+      "ELECTRIC_HEATED_SEATS": "Extras",
+      "HEATED_STEERING_WHEEL": "Extras",
+      "WIRELESS_CHARGING": "Extras",
+      "INTEGRATED_MUSIC_STREAMING": "Extras",
+      "ISOFIX": "Extras",
+      "LEATHER_STEERING_WHEEL": "Extras",
+      "LUMBAR_SUPPORT": "Extras",
+      "MASSAGE_SEATS": "Extras",
+      "MULTIFUNCTIONAL_WHEEL": "Extras",
+      "NAVIGATION_SYSTEM": "Extras",
+      "ON_BOARD_COMPUTER": "Extras",
+      "PADDLE_SHIFTERS": "Extras",
+      "PASSENGER_SEAT_ISOFIX_POINT": "Extras",
+      "VENTILATED_SEATS": "Extras",
+      "SKI_BAG": "Extras",
+      "SMOKERS_PACKAGE": "Extras",
+      "SOUND_SYSTEM": "Extras",
+      "SPORT_SEATS": "Extras",
+      "TOUCHSCREEN": "Extras",
+      "TV": "Extras",
+      "USB": "Extras",
+      "VOICE_CONTROL": "Extras",
+      "WINTER_PACKAGE": "Extras",
+      "WIFI_HOTSPOT": "Extras",
+      "NONSMOKER_VEHICLE": "Non-smoker vehicle",
+      "TAXI": "Taxi",
+      "WARRANTY": "Warranty"
+    },
+    "readyToDrive": {
+      "ONLY_READY_TO_DRIVE": "Roadworthy"
+    },
+    "fuels": {
+      "LPG": "Fuel Type",
+      "PETROL": "Fuel Type",
+      "DIESEL": "Fuel Type",
+      "ELECTRICITY": "Fuel Type",
+      "CNG": "Fuel Type",
+      "ETHANOL": "Fuel Type",
+      "HYBRID": "Fuel Type",
+      "HYBRID_DIESEL": "Fuel Type",
+      "HYDROGENIUM": "Fuel Type",
+      "OTHER": "Fuel Type"
+    },
+    "transmissions": {
+      "AUTOMATIC_GEAR": "Transmission",
+      "SEMIAUTOMATIC_GEAR": "Transmission",
+      "MANUAL_GEAR": "Transmission"
+    },
+    "bat": {
+      "BATTERY_PURCHASED": "Battery for electric vehicles",
+      "BATTERY_RENTED": "Battery for electric vehicles",
+      "BATTERY_MISSING": "Battery for electric vehicles"
+    },
+    "colors": {
+      "BEIGE": null,
+      "BROWN": null,
+      "GOLD": null,
+      "GREEN": null,
+      "RED": null,
+      "SILVER": null,
+      "WHITE": null,
+      "BLUE": null,
+      "YELLOW": null,
+      "GREY": null,
+      "ORANGE": null,
+      "BLACK": null,
+      "PURPLE": null
+    },
+    "parkAssistents": {
+      "REAR_SENSORS": "Parking sensors",
+      "FRONT_SENSORS": "Parking sensors",
+      "REAR_VIEW_CAM": "Parking sensors",
+      "CAM_360_DEGREES": "Parking sensors",
+      "AUTOMATIC_PARKING": "Parking sensors"
+    },
+    "bds": {
+      "SPARE_WHEEL": "Others",
+      "EMERGENCY_WHEEL": "Others",
+      "REPAIR_KIT": "Others"
+    },
+    "blt": {
+      "BENDING_LIGHTS": "Others",
+      "ADAPTIVE_BENDING_LIGHTS": "Others"
+    },
+    "drl": {
+      "DAYTIME_RUNNING_LIGHTS": "Others",
+      "LED_RUNNING_LIGHTS": "Others"
+    },
+    "hlt": {
+      "XENON_HEADLIGHTS": "Others",
+      "BI_XENON_HEADLIGHTS": "Others",
+      "LED_HEADLIGHTS": "Others",
+      "LASER_HEADLIGHTS": "Others"
+    },
+    "interiorColors": {
+      "BEIGE": "Interior Colour",
+      "BROWN": "Interior Colour",
+      "GREY": "Interior Colour",
+      "BLACK": "Interior Colour",
+      "OTHER_INTERIOR_COLOR": "Interior Colour"
+    },
+    "interiorTypes": {
+      "ALCANTARA": "Interior material",
+      "FABRIC": "Interior material",
+      "PARTIAL_LEATHER": "Interior material",
+      "VELOUR": "Interior material",
+      "LEATHER": "Interior material",
+      "OTHER_INTERIOR_TYPE": "Interior material"
+    },
+    "rad": {
+      "TUNER": "Extras",
+      "DAB_RADIO": "Extras"
+    },
+    "withImage": {
+      "true": "Ads with pictures"
+    },
+    "videoEnabled": {
+      "true": "Ads with video"
+    },
+    "redPencil": {
+      "true": "Discount offers"
+    },
+    "vatable": {
+      "true": "VAT reclaimable"
+    }
+  },
+  "null": {
+    "minSeats": {
+      "null": "Number of seats"
+    },
+    "maxSeats": {
+      "null": "Number of seats"
+    },
+    "minFirstRegistrationDate": {
+      "null": "First registration (date)"
+    },
+    "maxFirstRegistrationDate": {
+      "null": "First registration (date)"
+    },
+    "minMileage": {
+      "null": "Kilometer"
+    },
+    "maxMileage": {
+      "null": "Kilometer"
+    },
+    "minPowerAsArray": {
+      "null": "Power"
+    },
+    "maxPowerAsArray": {
+      "null": "Power"
+    },
+    "minCubicCapacity": {
+      "null": "Cubic capacity"
+    },
+    "maxCubicCapacity": {
+      "null": "Cubic capacity"
+    },
+    "minBatteryCapacity": {
+      "null": "Battery capacity"
+    },
+    "maxBatteryCapacity": {
+      "null": "Battery capacity"
+    }
+  },
+  "hidden": {
+    "gn": {
+      "null": null
+    },
+    "ll": {
+      "null": null
+    },
+    "rd": {
+      "null": null
+    },
+    "maxPowerAsArray": {
+      "KW": "Power"
+    }
+  },
+  "tel": {
+    "null": {
+      "null": null
+    }
+  },
+  "radio": {
+    "minPowerAsArray": {
+      "PS": "Power",
+      "KW": "Power"
+    },
+    "tct": {
+      "": null,
+      "TRAILER_COUPLING_FIX": null,
+      "TRAILER_COUPLING_DETACHABLE": null,
+      "TRAILER_COUPLING_SWIVELING": null
+    },
+    "spc": {
+      "": null,
+      "CRUISE_CONTROL": null,
+      "ADAPTIVE_CRUISE_CONTROL": null
+    },
+    "airbag": {
+      "": null,
+      "DRIVER_AIRBAG": null,
+      "FRONT_AIRBAGS": null,
+      "FRONT_AND_SIDE_AIRBAGS": null,
+      "FRONT_AND_SIDE_AND_MORE_AIRBAGS": null
+    },
+    "climatisation": {
+      "": "Any",
+      "NO_CLIMATISATION": "No climatisation",
+      "MANUAL_OR_AUTOMATIC_CLIMATISATION": "Manual or automatic climatisation",
+      "AUTOMATIC_CLIMATISATION": "Automatic air conditioning",
+      "AUTOMATIC_CLIMATISATION_2_ZONES": "Automatic climatisation, 2 zones",
+      "AUTOMATIC_CLIMATISATION_3_ZONES": "Automatic climatisation, 3 zones",
+      "AUTOMATIC_CLIMATISATION_4_ZONES": "Automatic climatisation, 4 zones"
+    },
+    "av": {
+      "": "Availability",
+      "INSTANT": "Availability",
+      "LATER": "Availability"
+    },
+    "adLimitation": {
+      "": "Vendor",
+      "ONLY_FSBO_ADS": "Vendor",
+      "ONLY_DEALER_ADS": "Vendor",
+      "ONLY_COMMERCIAL_FSBO_ADS": "Vendor"
+    },
+    "sr": {
+      "": "Dealer rating InfoRatings are available for dealer offers only. Please select 'Dealer' in the Vendor filter.",
+      "3": "Dealer rating InfoRatings are available for dealer offers only. Please select 'Dealer' in the Vendor filter.",
+      "4": "Dealer rating InfoRatings are available for dealer offers only. Please select 'Dealer' in the Vendor filter.",
+      "5": "Dealer rating InfoRatings are available for dealer offers only. Please select 'Dealer' in the Vendor filter."
+    },
+    "daysAfterCreation": {
+      "": "Ad online since",
+      "1": "Ad online since",
+      "3": "Ad online since",
+      "7": "Ad online since",
+      "14": "Ad online since"
+    }
+  }
+}
