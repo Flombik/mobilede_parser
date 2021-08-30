@@ -88,18 +88,17 @@ def parse_page_beta(page_url: str):
                 param = new_el.get('name') or new_el.get('id')
 
             try:
-                tmp = el
-                while getattr(tmp, 'name') not in ['fieldset', 'html']:
-                    tmp = tmp.parent
-                if tmp.name == 'fieldset':
-                    param_name = tmp.find('legend').text
-                else:
-                    label = el.parent.find('label', {"for": param_id})
-                    param_name = label.text
+                param_name = getattr(el.parent.find('label', {"for": param_id}), 'text', None)
+                if param_name is None:
+                    tmp = el
+                    while getattr(tmp, 'name') not in ['fieldset', 'html']:
+                        tmp = tmp.parent
+                    if tmp.name == 'fieldset':
+                        param_name = tmp.find('legend').text
             except AttributeError:
                 param_name = None
 
-            names_dict[param] = param_name
+            names_dict.setdefault(param, param_name)
             values_dict['select'][param] = {option.get('value'): option.text for option in el.find_all('option')}
         else:
             param_id = el.get('id')
@@ -107,17 +106,19 @@ def parse_page_beta(page_url: str):
 
             try:
                 tmp = el
-                while getattr(tmp, 'name') not in ['fieldset', 'html']:
+                while getattr(tmp, 'name') not in ['fieldset', 'html'] and 'content-row' not in (
+                        tmp.get('class') or []):
                     tmp = tmp.parent
-                if tmp.name == 'fieldset':
-                    param_name = tmp.find('legend').text
-                else:
-                    label = el.parent.find('label', {"for": param_id})
-                    param_name = label.text
+                if tmp.name != 'html':
+                    param_name = tmp.find(re.compile('legend|label')).text
+                    names_dict.setdefault(param, param_name)
+
+                param_name = getattr(el.parent.find('label', {"for": param_id}), 'text')
+
             except AttributeError:
                 param_name = None
 
-            names_dict[param] = param_name
+            names_dict.setdefault(param, param_name)
             values_dict[el.get('type')][param].update({el.get('value'): param_name})
 
     with open('names.json', 'w') as names_f, open('values.json', 'w') as values_f:

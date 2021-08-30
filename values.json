@@ -350,14 +350,14 @@
   },
   "checkbox": {
     "categories": {
-      "Cabrio": null,
-      "EstateCar": null,
-      "Limousine": null,
-      "SmallCar": null,
-      "SportsCar": null,
-      "OffRoad": null,
-      "Van": null,
-      "OtherCar": null
+      "Cabrio": "Cabriolet / Roadster",
+      "EstateCar": "Estate Car",
+      "Limousine": "Saloon",
+      "SmallCar": "Small Car",
+      "SportsCar": "Sports Car / Coupe",
+      "OffRoad": "SUV / Off-road Vehicle / Pickup Truck",
+      "Van": "Van / Minibus",
+      "OtherCar": "Other"
     },
     "usage": {
       "NEW": "New",
@@ -371,92 +371,92 @@
     },
     "features": {
       "FULL_SERVICE_HISTORY": "Full Service History",
-      "HYBRID_PLUGIN": "Fuel Type",
-      "PARTICULATE_FILTER_DIESEL": null,
+      "HYBRID_PLUGIN": "Plug-in hybrid",
+      "PARTICULATE_FILTER_DIESEL": "Particulate filter",
       "METALLIC": "Metallic",
-      "ABS": "Others",
-      "AIR_SUSPENSION": "Others",
-      "ALLOY_WHEELS": "Others",
-      "ALL_SEASON_TIRES": "Others",
-      "BLIND_SPOT_MONITOR": "Others",
-      "CENTRAL_LOCKING": "Others",
-      "DISTANCE_WARNING_SYSTEM": "Others",
-      "ELECTRIC_TAILGATE": "Others",
-      "COLLISION_AVOIDANCE": "Others",
-      "ESP": "Others",
-      "FRONT_FOG_LIGHTS": "Others",
-      "FOUR_WHEEL_DRIVE": "Others",
-      "GLARE_FREE_HIGH_BEAM": "Others",
-      "HEADLIGHT_WASHER_SYSTEM": "Others",
-      "HEATED_WINDSHIELD": "Others",
-      "HIGH_BEAM_ASSIST": "Others",
-      "HILL_START_ASSIST": "Others",
-      "IMMOBILIZER": "Others",
-      "KEYLESS_ENTRY": "Others",
-      "LANE_DEPARTURE_WARNING": "Others",
-      "LIGHT_SENSOR": "Others",
-      "NIGHT_VISION_ASSIST": "Others",
-      "PANORAMIC_GLASS_ROOF": "Others",
-      "POWER_ASSISTED_STEERING": "Others",
-      "AUTOMATIC_RAIN_SENSOR": "Others",
-      "ROOF_RAILS": "Others",
-      "SPEED_LIMITER": "Others",
-      "SPORT_PACKAGE": "Others",
-      "PERFORMANCE_HANDLING_SYSTEM": "Others",
-      "START_STOP_SYSTEM": "Others",
-      "STEEL_WHEELS": "Others",
-      "SUMMER_TIRES": "Others",
-      "SUNROOF": "Others",
-      "TRACTION_CONTROL_SYSTEM": "Others",
-      "TRAFFIC_SIGN_RECOGNITION": "Others",
-      "TIRE_PRESSURE_MONITORING": "Others",
-      "WINTER_TIRES": "Others",
-      "ALARM_SYSTEM": "Extras",
-      "AMBIENT_LIGHTING": "Extras",
-      "ANDROID_AUTO": "Extras",
-      "CARPLAY": "Extras",
-      "ARM_REST": "Extras",
-      "DIMMING_INTERIOR_MIRROR": "Extras",
-      "AUXILIARY_HEATING": "Extras",
-      "BLUETOOTH": "Extras",
-      "CARGO_BARRIER": "Extras",
-      "CD_PLAYER": "Extras",
-      "DIGITAL_COCKPIT": "Extras",
-      "DISABLED_ACCESSIBLE": "Extras",
-      "ELECTRIC_BACKSEAT_ADJUSTMENT": "Extras",
-      "ELECTRIC_ADJUSTABLE_SEATS": "Extras",
-      "ELECTRIC_EXTERIOR_MIRRORS": "Extras",
-      "ELECTRIC_WINDOWS": "Extras",
-      "EMERGENCY_CALL_SYSTEM": "Extras",
-      "FATIGUE_WARNING_SYSTEM": "Extras",
-      "FOLD_FLAT_PASSENGER_SEAT": "Extras",
-      "HANDS_FREE_PHONE_SYSTEM": "Extras",
-      "HEAD_UP_DISPLAY": "Extras",
-      "ELECTRIC_HEATED_REAR_SEATS": "Extras",
-      "ELECTRIC_HEATED_SEATS": "Extras",
-      "HEATED_STEERING_WHEEL": "Extras",
-      "WIRELESS_CHARGING": "Extras",
-      "INTEGRATED_MUSIC_STREAMING": "Extras",
-      "ISOFIX": "Extras",
-      "LEATHER_STEERING_WHEEL": "Extras",
-      "LUMBAR_SUPPORT": "Extras",
-      "MASSAGE_SEATS": "Extras",
-      "MULTIFUNCTIONAL_WHEEL": "Extras",
-      "NAVIGATION_SYSTEM": "Extras",
-      "ON_BOARD_COMPUTER": "Extras",
-      "PADDLE_SHIFTERS": "Extras",
-      "PASSENGER_SEAT_ISOFIX_POINT": "Extras",
-      "VENTILATED_SEATS": "Extras",
-      "SKI_BAG": "Extras",
-      "SMOKERS_PACKAGE": "Extras",
-      "SOUND_SYSTEM": "Extras",
-      "SPORT_SEATS": "Extras",
-      "TOUCHSCREEN": "Extras",
-      "TV": "Extras",
-      "USB": "Extras",
-      "VOICE_CONTROL": "Extras",
-      "WINTER_PACKAGE": "Extras",
-      "WIFI_HOTSPOT": "Extras",
+      "ABS": "ABS",
+      "AIR_SUSPENSION": "Air suspension",
+      "ALLOY_WHEELS": "Alloy wheels",
+      "ALL_SEASON_TIRES": "All season tyres",
+      "BLIND_SPOT_MONITOR": "Blind spot assist",
+      "CENTRAL_LOCKING": "Central locking",
+      "DISTANCE_WARNING_SYSTEM": "Distance warning system",
+      "ELECTRIC_TAILGATE": "Electric tailgate",
+      "COLLISION_AVOIDANCE": "Emergency brake assist",
+      "ESP": "ESP",
+      "FRONT_FOG_LIGHTS": "Fog lamp",
+      "FOUR_WHEEL_DRIVE": "Four wheel drive",
+      "GLARE_FREE_HIGH_BEAM": "Glare-free high beam headlights",
+      "HEADLIGHT_WASHER_SYSTEM": "Headlight washer system",
+      "HEATED_WINDSHIELD": "Heated windshield",
+      "HIGH_BEAM_ASSIST": "High beam assist",
+      "HILL_START_ASSIST": "Hill-start assist",
+      "IMMOBILIZER": "Immobilizer",
+      "KEYLESS_ENTRY": "Keyless central locking",
+      "LANE_DEPARTURE_WARNING": "Lane change assist",
+      "LIGHT_SENSOR": "Light sensor",
+      "NIGHT_VISION_ASSIST": "Night vision assist",
+      "PANORAMIC_GLASS_ROOF": "Panoramic roof",
+      "POWER_ASSISTED_STEERING": "Power Assisted Steering",
+      "AUTOMATIC_RAIN_SENSOR": "Rain sensor",
+      "ROOF_RAILS": "Roof rack",
+      "SPEED_LIMITER": "Speed limit control system",
+      "SPORT_PACKAGE": "Sports package",
+      "PERFORMANCE_HANDLING_SYSTEM": "Sports suspension",
+      "START_STOP_SYSTEM": "Start-stop system",
+      "STEEL_WHEELS": "Steel wheels",
+      "SUMMER_TIRES": "Summer tyres",
+      "SUNROOF": "Sunroof",
+      "TRACTION_CONTROL_SYSTEM": "Traction control",
+      "TRAFFIC_SIGN_RECOGNITION": "Traffic sign recognition",
+      "TIRE_PRESSURE_MONITORING": "Tyre pressure monitoring",
+      "WINTER_TIRES": "Winter tyres",
+      "ALARM_SYSTEM": "Alarm system",
+      "AMBIENT_LIGHTING": "Ambient lighting",
+      "ANDROID_AUTO": "Android Auto",
+      "CARPLAY": "Apple CarPlay",
+      "ARM_REST": "Arm rest",
+      "DIMMING_INTERIOR_MIRROR": "Autom. dimming interior mirror",
+      "AUXILIARY_HEATING": "Auxiliary heating",
+      "BLUETOOTH": "Bluetooth",
+      "CARGO_BARRIER": "Cargo barrier",
+      "CD_PLAYER": "CD player",
+      "DIGITAL_COCKPIT": "Digital cockpit",
+      "DISABLED_ACCESSIBLE": "Disabled accessible",
+      "ELECTRIC_BACKSEAT_ADJUSTMENT": "Electric backseat adjustment",
+      "ELECTRIC_ADJUSTABLE_SEATS": "Electric seat adjustment",
+      "ELECTRIC_EXTERIOR_MIRRORS": "Electric side mirror",
+      "ELECTRIC_WINDOWS": "Electric windows",
+      "EMERGENCY_CALL_SYSTEM": "Emergency call system",
+      "FATIGUE_WARNING_SYSTEM": "Fatigue warning system",
+      "FOLD_FLAT_PASSENGER_SEAT": "Fold flat passenger seat",
+      "HANDS_FREE_PHONE_SYSTEM": "Hands-free kit",
+      "HEAD_UP_DISPLAY": "Head-up display",
+      "ELECTRIC_HEATED_REAR_SEATS": "Heated rear seats",
+      "ELECTRIC_HEATED_SEATS": "Heated seats",
+      "HEATED_STEERING_WHEEL": "Heated steering wheel",
+      "WIRELESS_CHARGING": "Induction charging for smartphones",
+      "INTEGRATED_MUSIC_STREAMING": "Integrated music streaming",
+      "ISOFIX": "Isofix",
+      "LEATHER_STEERING_WHEEL": "Leather steering wheel",
+      "LUMBAR_SUPPORT": "Lumbar support",
+      "MASSAGE_SEATS": "Massage seats",
+      "MULTIFUNCTIONAL_WHEEL": "Multifunction steering wheel",
+      "NAVIGATION_SYSTEM": "Navigation system",
+      "ON_BOARD_COMPUTER": "On-board computer",
+      "PADDLE_SHIFTERS": "Paddle shifters",
+      "PASSENGER_SEAT_ISOFIX_POINT": "Passenger seat Isofix point",
+      "VENTILATED_SEATS": "Seat ventilation",
+      "SKI_BAG": "Ski bag",
+      "SMOKERS_PACKAGE": "Smoker's package",
+      "SOUND_SYSTEM": "Sound system",
+      "SPORT_SEATS": "Sport seats",
+      "TOUCHSCREEN": "Touchscreen",
+      "TV": "TV",
+      "USB": "USB port",
+      "VOICE_CONTROL": "Voice control",
+      "WINTER_PACKAGE": "Winter package",
+      "WIFI_HOTSPOT": "WLAN / WiFi hotspot",
       "NONSMOKER_VEHICLE": "Non-smoker vehicle",
       "TAXI": "Taxi",
       "WARRANTY": "Warranty"
@@ -465,26 +465,26 @@
       "ONLY_READY_TO_DRIVE": "Roadworthy"
     },
     "fuels": {
-      "LPG": "Fuel Type",
-      "PETROL": "Fuel Type",
-      "DIESEL": "Fuel Type",
-      "ELECTRICITY": "Fuel Type",
-      "CNG": "Fuel Type",
-      "ETHANOL": "Fuel Type",
-      "HYBRID": "Fuel Type",
-      "HYBRID_DIESEL": "Fuel Type",
-      "HYDROGENIUM": "Fuel Type",
-      "OTHER": "Fuel Type"
+      "LPG": "LPG",
+      "PETROL": "Petrol",
+      "DIESEL": "Diesel",
+      "ELECTRICITY": "Electric",
+      "CNG": "Natural Gas",
+      "ETHANOL": "Ethanol (FFV, E85, etc.)",
+      "HYBRID": "Hybrid (petrol/electric)",
+      "HYBRID_DIESEL": "Hybrid (diesel/electric)",
+      "HYDROGENIUM": "Hydrogen",
+      "OTHER": "Other"
     },
     "transmissions": {
-      "AUTOMATIC_GEAR": "Transmission",
-      "SEMIAUTOMATIC_GEAR": "Transmission",
-      "MANUAL_GEAR": "Transmission"
+      "AUTOMATIC_GEAR": "Automatic transmission",
+      "SEMIAUTOMATIC_GEAR": "Semi-automatic",
+      "MANUAL_GEAR": "Manual gearbox"
     },
     "bat": {
-      "BATTERY_PURCHASED": "Battery for electric vehicles",
-      "BATTERY_RENTED": "Battery for electric vehicles",
-      "BATTERY_MISSING": "Battery for electric vehicles"
+      "BATTERY_PURCHASED": "included",
+      "BATTERY_RENTED": "included/rent",
+      "BATTERY_MISSING": "without battery"
     },
     "colors": {
       "BEIGE": null,
@@ -502,49 +502,49 @@
       "PURPLE": null
     },
     "parkAssistents": {
-      "REAR_SENSORS": "Parking sensors",
-      "FRONT_SENSORS": "Parking sensors",
-      "REAR_VIEW_CAM": "Parking sensors",
-      "CAM_360_DEGREES": "Parking sensors",
-      "AUTOMATIC_PARKING": "Parking sensors"
+      "REAR_SENSORS": "Rear",
+      "FRONT_SENSORS": "Front",
+      "REAR_VIEW_CAM": "Camera",
+      "CAM_360_DEGREES": "360° camera",
+      "AUTOMATIC_PARKING": "Self-steering systems"
     },
     "bds": {
-      "SPARE_WHEEL": "Others",
-      "EMERGENCY_WHEEL": "Others",
-      "REPAIR_KIT": "Others"
+      "SPARE_WHEEL": "Spare tyre",
+      "EMERGENCY_WHEEL": "Emergency tyre",
+      "REPAIR_KIT": "Emergency tyre repair kit"
     },
     "blt": {
-      "BENDING_LIGHTS": "Others",
-      "ADAPTIVE_BENDING_LIGHTS": "Others"
+      "BENDING_LIGHTS": "Adaptive lighting",
+      "ADAPTIVE_BENDING_LIGHTS": "Adaptive cornering lights"
     },
     "drl": {
-      "DAYTIME_RUNNING_LIGHTS": "Others",
-      "LED_RUNNING_LIGHTS": "Others"
+      "DAYTIME_RUNNING_LIGHTS": "Daytime running lights",
+      "LED_RUNNING_LIGHTS": "LED running lights"
     },
     "hlt": {
-      "XENON_HEADLIGHTS": "Others",
-      "BI_XENON_HEADLIGHTS": "Others",
-      "LED_HEADLIGHTS": "Others",
-      "LASER_HEADLIGHTS": "Others"
+      "XENON_HEADLIGHTS": "Xenon headlights",
+      "BI_XENON_HEADLIGHTS": "Bi-xenon headlights",
+      "LED_HEADLIGHTS": "LED headlights",
+      "LASER_HEADLIGHTS": "Laser headlights"
     },
     "interiorColors": {
-      "BEIGE": "Interior Colour",
-      "BROWN": "Interior Colour",
-      "GREY": "Interior Colour",
-      "BLACK": "Interior Colour",
-      "OTHER_INTERIOR_COLOR": "Interior Colour"
+      "BEIGE": null,
+      "BROWN": null,
+      "GREY": null,
+      "BLACK": null,
+      "OTHER_INTERIOR_COLOR": null
     },
     "interiorTypes": {
-      "ALCANTARA": "Interior material",
-      "FABRIC": "Interior material",
-      "PARTIAL_LEATHER": "Interior material",
-      "VELOUR": "Interior material",
-      "LEATHER": "Interior material",
-      "OTHER_INTERIOR_TYPE": "Interior material"
+      "ALCANTARA": "Alcantara",
+      "FABRIC": "Cloth",
+      "PARTIAL_LEATHER": "Part leather",
+      "VELOUR": "Velour",
+      "LEATHER": "Full leather",
+      "OTHER_INTERIOR_TYPE": "Other"
     },
     "rad": {
-      "TUNER": "Extras",
-      "DAB_RADIO": "Extras"
+      "TUNER": "Tuner/radio",
+      "DAB_RADIO": "DAB radio"
     },
     "withImage": {
       "true": "Ads with pictures"
@@ -559,85 +559,28 @@
       "true": "VAT reclaimable"
     }
   },
-  "null": {
-    "minSeats": {
-      "null": "Number of seats"
-    },
-    "maxSeats": {
-      "null": "Number of seats"
-    },
-    "minFirstRegistrationDate": {
-      "null": "First registration (date)"
-    },
-    "maxFirstRegistrationDate": {
-      "null": "First registration (date)"
-    },
-    "minMileage": {
-      "null": "Kilometer"
-    },
-    "maxMileage": {
-      "null": "Kilometer"
-    },
-    "minPowerAsArray": {
-      "null": "Power"
-    },
-    "maxPowerAsArray": {
-      "null": "Power"
-    },
-    "minCubicCapacity": {
-      "null": "Cubic capacity"
-    },
-    "maxCubicCapacity": {
-      "null": "Cubic capacity"
-    },
-    "minBatteryCapacity": {
-      "null": "Battery capacity"
-    },
-    "maxBatteryCapacity": {
-      "null": "Battery capacity"
-    }
-  },
-  "hidden": {
-    "gn": {
-      "null": null
-    },
-    "ll": {
-      "null": null
-    },
-    "rd": {
-      "null": null
-    },
-    "maxPowerAsArray": {
-      "KW": "Power"
-    }
-  },
-  "tel": {
-    "null": {
-      "null": null
-    }
-  },
   "radio": {
     "minPowerAsArray": {
-      "PS": "Power",
-      "KW": "Power"
+      "PS": "PS",
+      "KW": "kW"
     },
     "tct": {
-      "": null,
-      "TRAILER_COUPLING_FIX": null,
-      "TRAILER_COUPLING_DETACHABLE": null,
-      "TRAILER_COUPLING_SWIVELING": null
+      "": "Any",
+      "TRAILER_COUPLING_FIX": "Fix, detachable or swiveling",
+      "TRAILER_COUPLING_DETACHABLE": "Detachable or swiveling",
+      "TRAILER_COUPLING_SWIVELING": "Swiveling"
     },
     "spc": {
-      "": null,
-      "CRUISE_CONTROL": null,
-      "ADAPTIVE_CRUISE_CONTROL": null
+      "": "Any",
+      "CRUISE_CONTROL": "Cruise control",
+      "ADAPTIVE_CRUISE_CONTROL": "Adaptive Cruise Control"
     },
     "airbag": {
-      "": null,
-      "DRIVER_AIRBAG": null,
-      "FRONT_AIRBAGS": null,
-      "FRONT_AND_SIDE_AIRBAGS": null,
-      "FRONT_AND_SIDE_AND_MORE_AIRBAGS": null
+      "": "Any",
+      "DRIVER_AIRBAG": "Driver Airbag",
+      "FRONT_AIRBAGS": "Front Airbags",
+      "FRONT_AND_SIDE_AIRBAGS": "Front and Side Airbags",
+      "FRONT_AND_SIDE_AND_MORE_AIRBAGS": "Front and Side and More Airbags"
     },
     "climatisation": {
       "": "Any",
@@ -649,28 +592,28 @@
       "AUTOMATIC_CLIMATISATION_4_ZONES": "Automatic climatisation, 4 zones"
     },
     "av": {
-      "": "Availability",
-      "INSTANT": "Availability",
-      "LATER": "Availability"
+      "": "Any",
+      "INSTANT": "Available now",
+      "LATER": "With delivery time"
     },
     "adLimitation": {
-      "": "Vendor",
-      "ONLY_FSBO_ADS": "Vendor",
-      "ONLY_DEALER_ADS": "Vendor",
-      "ONLY_COMMERCIAL_FSBO_ADS": "Vendor"
+      "": "Any",
+      "ONLY_FSBO_ADS": "Private seller",
+      "ONLY_DEALER_ADS": "Dealer",
+      "ONLY_COMMERCIAL_FSBO_ADS": "Company vehicles"
     },
     "sr": {
-      "": "Dealer rating InfoRatings are available for dealer offers only. Please select 'Dealer' in the Vendor filter.",
-      "3": "Dealer rating InfoRatings are available for dealer offers only. Please select 'Dealer' in the Vendor filter.",
-      "4": "Dealer rating InfoRatings are available for dealer offers only. Please select 'Dealer' in the Vendor filter.",
-      "5": "Dealer rating InfoRatings are available for dealer offers only. Please select 'Dealer' in the Vendor filter."
+      "": "Any",
+      "3": "From",
+      "4": "From",
+      "5": ""
     },
     "daysAfterCreation": {
-      "": "Ad online since",
-      "1": "Ad online since",
-      "3": "Ad online since",
-      "7": "Ad online since",
-      "14": "Ad online since"
+      "": "Any",
+      "1": "1 day",
+      "3": "3 days",
+      "7": "7 days",
+      "14": "14 days"
     }
   }
 }
