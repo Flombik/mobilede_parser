@@ -1,6 +1,7 @@
 import datetime
 import random
 import re
+from collections import defaultdict
 from contextlib import suppress
 from math import ceil
 from typing import Dict, List, Union, Any
@@ -12,17 +13,139 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.db.models import Value, F, Count
+from django.db.models import Value, F
 from django.db.models.functions import Ceil
 from django.db.models.signals import pre_delete
 from django.db.transaction import atomic
 from django.dispatch import receiver
+from furl import furl
 
 DB_CHUNK_SIZE = 5000
 
 
-class Search(models.Model):
-    url = models.URLField(max_length=2048, null=False, db_index=True)
+class ParametersValidationError(Exception):
+    def __init__(self, message, *args):
+        super().__init__(message, *args)
+
+
+class QueryParametersMixin(models.Model):
+    class Meta:
+        abstract = True
+
+    root_url = ''
+    single_value_fields = ()
+    multiple_value_fields = ()
+
+    @property
+    def fields(self):
+        return self.single_value_fields + self.multiple_value_fields
+
+    parameters = models.JSONField(default=dict)
+
+    @staticmethod
+    def _parse_url(url) -> tuple[furl, dict]:
+        url = furl(url)
+        params = defaultdict(list)
+        for key, value in url.args.iterallitems():
+            if value is not None:
+                params[key].append(value)
+            else:
+                params.setdefault('key')
+        params = {key: None if not value else value[0] if len(value) == 1 else value for key, value in params.items()}
+        return url, params
+
+    def _validate_params(self, params: dict):
+        for key, value in params.items():
+            if key not in self.fields:
+                raise ParametersValidationError(f'Parameter "{key}" is not allowed.')
+            if key in self.single_value_fields and type(value) is list:
+                raise ParametersValidationError(f'Value of parameter "{key}" must be single.')
+
+    def _form_url(self) -> str:
+        url = furl(self.root_url, query_params=self.parameters)
+        return url.url
+
+    def _from_url(self, url):
+        url, params = self._parse_url(url)
+        if furl(self.root_url).origin != url.origin:
+            raise ParametersValidationError('URL origin must match root URL.')
+        self._validate_params(params)
+        self.parameters = params
+
+    url = property(_form_url, _from_url)
+
+
+class Search(QueryParametersMixin):
+    root_url = 'https://suchen.mobile.de/fahrzeuge/search.html'
+    single_value_fields = ('makeModelVariant1.makeId',
+                           'makeModelVariant1.modelId',
+                           'makeModelVariantExclusions[0].makeId',
+                           'makeModelVariantExclusions[0].modelId',
+                           'minSeats',
+                           'maxSeats',
+                           'doorCount',
+                           'sld',
+                           'minFirstRegistrationDate',
+                           'maxFirstRegistrationDate',
+                           'minMileage',
+                           'maxMileage',
+                           'minHu',
+                           'numberOfPreviousOwners',
+                           'cn',
+                           'ambit-search-radius',
+                           'minPowerAsArray',
+                           'maxPowerAsArray',
+                           'minCubicCapacity',
+                           'maxCubicCapacity',
+                           'maxConsumptionCombined',
+                           'emissionsSticker',
+                           'emissionClass',
+                           'minBatteryCapacity',
+                           'maxBatteryCapacity',
+                           'damageUnrepaired',
+                           'export',
+                           'usedCarSeals',
+                           'makeModelVariant1.modelDescription',
+                           'null',
+                           'minPowerAsArray',
+                           'tct',
+                           'spc',
+                           'airbag',
+                           'climatisation',
+                           'av',
+                           'adLimitation',
+                           'sr',
+                           'daysAfterCreation',
+                           'grossPrice',
+                           'isSearchRequest',
+                           'maxPrice',
+                           'sortOption.sortBy',
+                           'sortOption.sortOrder',
+                           'sset',
+                           'ssid',
+                           'scopeId')
+    multiple_value_fields = ('categories',
+                             'usage',
+                             'usageType',
+                             'features',
+                             'readyToDrive',
+                             'fuels',
+                             'transmissions',
+                             'bat',
+                             'colors',
+                             'parkAssistents',
+                             'bds',
+                             'blt',
+                             'drl',
+                             'hlt',
+                             'interiorColors',
+                             'interiorTypes',
+                             'rad',
+                             'withImage',
+                             'videoEnabled',
+                             'redPencil',
+                             'vatable')
+
     name = models.CharField(max_length=1024)
     subscribers = models.ManyToManyField(get_user_model(), blank=True)
 
