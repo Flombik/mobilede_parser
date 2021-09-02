@@ -4,7 +4,6 @@ import re
 from contextlib import suppress
 from math import ceil
 from typing import Dict, List, Union, Any
-from urllib.parse import urlparse, parse_qs
 
 import requests
 from bs4 import BeautifulSoup
@@ -12,11 +11,12 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.db.models import Value, F, Count
+from django.db.models import Value, F
 from django.db.models.functions import Ceil
 from django.db.models.signals import pre_delete
 from django.db.transaction import atomic
 from django.dispatch import receiver
+from furl import furl
 
 DB_CHUNK_SIZE = 5000
 
@@ -84,7 +84,7 @@ class Search(models.Model):
         ads = []
         for ad in page_ads:
             url = ad.find('a').get('href')
-            site_id = int(parse_qs(urlparse(url).query)['id'][0])
+            site_id = int(furl(url).args.getlist('id')[0])
             headline_block = ad.find('div', 'headline-block')
 
             headline_block = headline_block.find_all('span')
