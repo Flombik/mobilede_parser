@@ -2,6 +2,9 @@ import json
 import random
 import re
 from collections import defaultdict
+from selenium import webdriver
+from selenium.webdriver.support.ui import Select
+import time
 
 import requests
 from bs4 import BeautifulSoup
@@ -126,5 +129,36 @@ def parse_page_beta(page_url: str):
         json.dump(values_dict, values_f, ensure_ascii=False)
 
 
+def parse_make_model(page_url: str):
+    with webdriver.Chrome() as driver:
+        driver.get(page_url)
+        make_select = Select(driver.find_element_by_id('selectMake1-ds'))
+        makes = []
+        for option_index, make in enumerate(make_select.options):
+            make_select.select_by_index(option_index)
+            if make.text.lower() == 'any':
+                continue
+            time.sleep(0.2)
+            model_select = Select(driver.find_element_by_id('selectModel1-ds'))
+            makes.append(
+                {
+                    'id': make.get_attribute('value'),
+                    'name': make.text,
+                    'models': [
+                        {
+                            'id': model.get_attribute('value'),
+                            'name': model.text
+                        }
+                        for model in model_select.options
+                        if model.text.lower() != 'any'
+                    ]
+                }
+            )
+
+    with open('makes_models.json', 'w') as f:
+        json.dump(makes, f, ensure_ascii=False)
+
+
 if __name__ == '__main__':
-    parse_page_beta(PAGE_URL)
+    # parse_page_beta(PAGE_URL)
+    parse_make_model(PAGE_URL)
