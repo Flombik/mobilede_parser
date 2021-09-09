@@ -97,6 +97,7 @@ class Search(QueryParametersMixin):
         'export',
         'grossPrice',
         'isSearchRequest',
+        'lang',
         'makeModelVariant1.makeId',
         'makeModelVariant1.modelDescription',
         'makeModelVariant1.modelId',
@@ -121,6 +122,7 @@ class Search(QueryParametersMixin):
         'minSeats',
         'null',
         'numberOfPreviousOwners',
+        'pageNumber',
         'readyToDrive',
         'scopeId',
         'sfmr',
@@ -172,15 +174,14 @@ class Search(QueryParametersMixin):
     created_at = models.DateTimeField('creation date', auto_now_add=True)
     updated_at = models.DateTimeField('last updated', auto_now=True)
 
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #
-    #     self.__session = requests.Session()
-    #
-    # @property
-    # def _session(self) -> requests.Session:
-    #     self.__session.headers.update(self._get_headers_for_request())
-    #     return self.__session
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.__session = requests.Session()
+
+    @property
+    def _session(self) -> requests.Session:
+        self.__session.headers.update(self._get_headers_for_request())
+        return self.__session
 
     def __str__(self):
         return self.name
@@ -193,11 +194,8 @@ class Search(QueryParametersMixin):
         return headers
 
     def _get_num_of_pages(self) -> int:
-        headers = self._get_headers_for_request()
-        response = requests.get(self.url, headers=headers)
+        response = self._session.get(self.url)
         response.raise_for_status()
-        # session = self._session
-        # response = session.get(self.url)
 
         soup = BeautifulSoup(response.content, 'lxml')
         pagination = soup.find('ul', 'pagination')
@@ -212,8 +210,7 @@ class Search(QueryParametersMixin):
         return max_page
 
     def _get_page_by_num(self, page_num: int) -> bytes:
-        headers = self._get_headers_for_request()
-        response = requests.get(self.url, headers=headers, params={'pageNumber': page_num})
+        response = self._session.get(self.url, params={'pageNumber': page_num})
         response.raise_for_status()
 
         return response.content
