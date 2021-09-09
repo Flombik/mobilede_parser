@@ -36,6 +36,9 @@ class QueryParametersMixin(models.Model):
     single_value_fields = ()
     multiple_value_fields = ()
 
+    overriding_params = {}
+    excluding_params = ()
+
     @property
     def fields(self):
         return self.single_value_fields + self.multiple_value_fields
@@ -61,18 +64,21 @@ class QueryParametersMixin(models.Model):
             if key in self.single_value_fields and type(value) is list:
                 raise ParametersValidationError(f'Value of parameter "{key}" must be single.')
 
-    def _form_url(self) -> str:
-        url = furl(self.root_url, query_params=self.parameters)
+    @property
+    def url(self) -> str:
+        params = self.parameters | self.overriding_params
+        for param in self.excluding_params:
+            params.pop(param, None)
+        url = furl(self.root_url, query_params=params)
         return url.url
 
-    def _from_url(self, url):
+    @url.setter
+    def url(self, url):
         url, params = self._parse_url(url)
         if furl(self.root_url).origin != url.origin:
             raise ParametersValidationError('URL origin must match root URL.')
         self._validate_params(params)
         self.parameters = params
-
-    url = property(_form_url, _from_url)
 
 
 class Search(QueryParametersMixin):
@@ -151,7 +157,14 @@ class Search(QueryParametersMixin):
         'transmissions',
         'usage',
         'usageType',
-        'videoEnabled'
+        'videoEnabled',
+    )
+    overriding_params = {
+        'isSearchRequest': 'true',
+        'lang': 'en',
+    }
+    excluding_params = (
+        'pageNumber',
     )
 
     name = models.CharField(max_length=1024)
@@ -201,7 +214,7 @@ class Search(QueryParametersMixin):
 
     def _get_page_by_num(self, page_num: int) -> bytes:
         headers = self._get_headers_for_request()
-        response = requests.get(self.url, headers=headers, params={'pageNumber': page_num, 'lang': 'en'})
+        response = requests.get(self.url, headers=headers, params={'pageNumber': page_num})
         response.raise_for_status()
 
         return response.content
