@@ -6,7 +6,7 @@ from .models import Search, Ad
 
 class SearchAdmin(ModelAdmin):
     list_display = ('name', 'url')
-    readonly_fields = ('created_at', 'updated_at')
+    readonly_fields = ('created_at', 'updated_at', 'url')
     search_fields = ('name',)
     filter_horizontal = ('subscribers',)
 

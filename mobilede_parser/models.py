@@ -1,6 +1,7 @@
 import datetime
 import random
 import re
+from collections import defaultdict
 from contextlib import suppress
 from math import ceil
 from typing import Dict, List, Union, Any
@@ -21,8 +22,150 @@ from furl import furl
 DB_CHUNK_SIZE = 5000
 
 
-class Search(models.Model):
-    url = models.URLField(max_length=2048, null=False, db_index=True)
+class ParametersValidationError(Exception):
+    def __init__(self, message, *args):
+        super().__init__(message, *args)
+
+
+class QueryParametersMixin(models.Model):
+    class Meta:
+        abstract = True
+
+    root_url = ''
+    single_value_fields = ()
+    multiple_value_fields = ()
+
+    overriding_params = {}
+    excluding_params = ()
+
+    @property
+    def fields(self):
+        return self.single_value_fields + self.multiple_value_fields
+
+    parameters = models.JSONField(default=dict)
+
+    @staticmethod
+    def _parse_url(url) -> tuple[furl, dict]:
+        url = furl(url)
+        params = defaultdict(list)
+        for key, value in url.args.iterallitems():
+            if value is not None:
+                params[key].append(value)
+            else:
+                params.setdefault('key')
+        params = {key: None if not value else value[0] if len(value) == 1 else value for key, value in params.items()}
+        return url, params
+
+    def _validate_params(self, params: dict):
+        for key, value in params.items():
+            if key not in self.fields:
+                raise ParametersValidationError(f'Parameter "{key}" is not allowed.')
+            if key in self.single_value_fields and type(value) is list:
+                raise ParametersValidationError(f'Value of parameter "{key}" must be single.')
+
+    @property
+    def url(self) -> str:
+        params = self.parameters | self.overriding_params
+        for param in self.excluding_params:
+            params.pop(param, None)
+        url = furl(self.root_url, query_params=params)
+        return url.url
+
+    @url.setter
+    def url(self, url):
+        url, params = self._parse_url(url)
+        if furl(self.root_url).origin != url.origin:
+            raise ParametersValidationError('URL origin must match root URL.')
+        self._validate_params(params)
+        self.parameters = params
+
+
+class Search(QueryParametersMixin):
+    root_url = 'https://suchen.mobile.de/fahrzeuge/search.html'
+    single_value_fields = (
+        'adLimitation',
+        'airbag',
+        'ambit-search-radius',
+        'av',
+        'climatisation',
+        'cn',
+        'damageUnrepaired',
+        'daysAfterCreation',
+        'doorCount',
+        'emissionClass',
+        'emissionsSticker',
+        'export',
+        'grossPrice',
+        'isSearchRequest',
+        'makeModelVariant1.makeId',
+        'makeModelVariant1.modelDescription',
+        'makeModelVariant1.modelId',
+        'makeModelVariant2.makeId',
+        'makeModelVariant2.modelDescription',
+        'makeModelVariant2.modelId',
+        'makeModelVariantExclusions[0].makeId',
+        'makeModelVariantExclusions[0].modelId',
+        'maxBatteryCapacity',
+        'maxConsumptionCombined',
+        'maxCubicCapacity',
+        'maxFirstRegistrationDate',
+        'maxMileage',
+        'maxPrice',
+        'maxSeats',
+        'minBatteryCapacity',
+        'minCubicCapacity',
+        'minFirstRegistrationDate',
+        'minHu',
+        'minMileage',
+        'minPrice',
+        'minSeats',
+        'null',
+        'numberOfPreviousOwners',
+        'readyToDrive',
+        'scopeId',
+        'sfmr',
+        'sld',
+        'sortOption.sortBy',
+        'sortOption.sortOrder',
+        'spc',
+        'sr',
+        'sset',
+        'ssid',
+        'tct',
+        'usedCarSeals',
+        'vatable',
+        'withImage',
+    )
+    multiple_value_fields = (
+        'bat',
+        'bds',
+        'blt',
+        'categories',
+        'colors',
+        'drl',
+        'features',
+        'fuels',
+        'hlt',
+        'interiorColors',
+        'interiorTypes',
+        'maxPowerAsArray',
+        'minPowerAsArray',
+        'parkAssistents',
+        'rad',
+        'redPencil',
+        'transmissions',
+        'usage',
+        'usageType',
+        'videoEnabled',
+    )
+    overriding_params = {
+        'isSearchRequest': 'true',
+        'lang': 'en',
+    }
+    excluding_params = (
+        'pageNumber',
+    )
+
     name = models.CharField(max_length=1024)
     subscribers = models.ManyToManyField(get_user_model(), blank=True)
 
@@ -70,7 +213,7 @@ class Search(models.Model):
 
     def _get_page_by_num(self, page_num: int) -> bytes:
         headers = self._get_headers_for_request()
-        response = requests.get(self.url, headers=headers, params={'pageNumber': page_num, 'lang': 'en'})
+        response = requests.get(self.url, headers=headers, params={'pageNumber': page_num})
         response.raise_for_status()
 
         return response.content
@@ -117,7 +260,8 @@ class Search(models.Model):
 
             image_block = ad.find('div', 'image-block')
             try:
-                image_url = image_block.find('img').get('data-src')
+                img_el = image_block.find('img')
+                image_url = img_el.get('src') or img_el.get('data-src')
                 if image_url.startswith('//'):
                     image_url = 'https:' + image_url
             except AttributeError:
