@@ -284,13 +284,21 @@ class Search(QueryParametersMixin):
             for i in range(0, len(itr), n):
                 yield itr[i:i + n]
 
-        # TODO: think about including existed ads to "search obj" if they in results
         ads_chunks = chunkify(ads, DB_CHUNK_SIZE)
         for ads_chunk in ads_chunks:
-            with atomic():
-                for ad in ads_chunk:
-                    site_id = ad.pop('site_id')
-                    self.ad_set.update_or_create(site_id=site_id, defaults=ad)
+            ads_ids = {ad.get('site_id') for ad in ads_chunk}
+            existed_ads_ids = Ad.objects.filter(site_id__in=ads_ids).values_list('site_id', flat=True)
+            ad_to_search_links = []
+
+            for ad_id in existed_ads_ids:
+                ad_to_search_links.append(Ad.searches.through(ad_id=ad_id, search_id=self.id))
+
+            new_ads = [Ad(**ad) for ad in ads_chunk if ad.get('site_id') not in existed_ads_ids]
+            for ad in new_ads:
+                ad_to_search_links.append(Ad.searches.through(ad_id=ad.site_id, search_id=self.id))
+
+            Ad.objects.bulk_create(new_ads, DB_CHUNK_SIZE)
+            Ad.searches.through.objects.bulk_create(ad_to_search_links, DB_CHUNK_SIZE, ignore_conflicts=True)
 
     def parse_ads(self):
         num_of_pages = self._get_num_of_pages()
