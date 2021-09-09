@@ -228,8 +228,7 @@ class Search(QueryParametersMixin):
             headline_block = ad.find('div', 'headline-block')
 
             headline_block = headline_block.find_all('span')
-            if len(headline_block) == 3:
-                headline_block = headline_block[1:]
+            headline_block = list(filter(lambda span: {'new-headline-label'} - set(span.get('class')), headline_block))
 
             try:
                 name, date = headline_block
