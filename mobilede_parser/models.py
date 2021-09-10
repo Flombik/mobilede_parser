@@ -1,4 +1,3 @@
-import datetime
 import random
 import re
 from collections import defaultdict
@@ -17,6 +16,7 @@ from django.db.models.functions import Ceil
 from django.db.models.signals import pre_delete
 from django.db.transaction import atomic
 from django.dispatch import receiver
+from django.utils import timezone
 from furl import furl
 
 DB_CHUNK_SIZE = 5000
@@ -237,7 +237,10 @@ class Search(QueryParametersMixin):
                 name, date = headline_block
                 name = name.text.strip()
                 date = date.text.strip()
-                date = datetime.datetime.strptime(date, 'Ad online since %b %d, %Y, %I:%M %p')
+
+                date = timezone.datetime.strptime(date, 'Ad online since %b %d, %Y, %I:%M %p')
+                current_timezone = timezone.get_current_timezone()
+                date = current_timezone.localize(date)
             except ValueError:
                 date = None
                 name = headline_block[0].text.strip()
