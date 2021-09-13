@@ -21,7 +21,7 @@ admin.site.register(Search, SearchAdmin)
 
 class AdAdmin(ModelAdmin):
     list_display = ('site_id', 'name', 'price', 'price_net', 'vat', 'date')
-    readonly_fields = ('price_net', 'created_at', 'updated_at')
+    readonly_fields = ('price_net', 'created_at', 'updated_at', 'url')
     search_fields = ('site_id', 'name',)
     filter_horizontal = ('searches',)
     date_hierarchy = 'date'

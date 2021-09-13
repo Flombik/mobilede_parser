@@ -314,9 +314,14 @@ class Search(QueryParametersMixin):
         return list(self.ad_set.all())
 
 
-class Ad(models.Model):
+class Ad(QueryParametersMixin):
+    root_url = 'https://suchen.mobile.de/fahrzeuge/details.html'
+
+    single_value_fields = ('id', 'fnai', 'searchId', 'action') + Search.single_value_fields
+    multiple_value_fields = Search.multiple_value_fields
+    overriding_params = {'lang': 'en'}
+
     site_id = models.IntegerField(primary_key=True, db_index=True)
-    url = models.URLField(max_length=2048, null=False)
 
     name = models.CharField(max_length=1024, blank=True)
     price = models.PositiveIntegerField(null=True, blank=True)
