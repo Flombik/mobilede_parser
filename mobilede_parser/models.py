@@ -436,9 +436,10 @@ class Ad(QueryParametersMixin, SessionMixin):
     def renew_data(self):
         page = self._get_page()
         data = self._parse_page(page)
-        for key, value in data.items():
-            setattr(self, key, value)
-        self.save()
+        if data:
+            for key, value in data.items():
+                setattr(self, key, value)
+            self.save()
 
 
 @receiver(pre_delete, sender=Search)
