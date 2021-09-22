@@ -1,5 +1,7 @@
 import random
 import re
+import time
+import unicodedata
 from collections import defaultdict
 from contextlib import suppress
 from math import ceil
@@ -18,6 +20,15 @@ from django.db.transaction import atomic
 from django.dispatch import receiver
 from django.utils import timezone
 from furl import furl
+
+try:
+    import selenium
+except ImportError:
+    SELENIUM_IS_AVAILABLE = False
+else:
+    from selenium.webdriver import Chrome, ChromeOptions
+
+    SELENIUM_IS_AVAILABLE = True
 
 DB_CHUNK_SIZE = 5000
 
@@ -270,6 +281,7 @@ class Search(QueryParametersMixin, SessionMixin):
                 ' ',
                 str(ad.find('div', re.compile(r'^vehicle-data')))
             ).strip()
+            description = unicodedata.normalize('NFKD', description)
 
             image_block = ad.find('div', 'image-block')
             try:
@@ -277,6 +289,7 @@ class Search(QueryParametersMixin, SessionMixin):
                 image_url = img_el.get('src') or img_el.get('data-src')
                 if image_url.startswith('//'):
                     image_url = 'https:' + image_url
+                image_url = re.sub(r'\$_\d+', '$_10', image_url)
             except AttributeError:
                 image_url = ''
 
@@ -348,6 +361,79 @@ class Ad(models.Model, SessionMixin):
     @admin.display(ordering=Ceil(F('price') - F('price') * F('vat') / Value(100)))
     def price_net(self) -> int:
         return ceil(self.price * (1 - self.vat / 100))
+
+    def _get_page(self, session: requests.Session = None) -> bytes:
+        if SELENIUM_IS_AVAILABLE:
+            webdriver_options = ChromeOptions()
+            webdriver_options.add_argument('--headless')
+            webdriver_options.add_argument('--no-sandbox')
+            # webdriver_options.add_argument("--window-size=854,480")
+            webdriver_options.add_argument(
+                "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36"
+            )
+            with Chrome(options=webdriver_options) as webdriver:
+                # webdriver.set_window_size(854,480)
+                webdriver.get(self.url)
+                time.sleep(4)
+                content = webdriver.page_source
+        else:
+            if session is None:
+                session = self._session
+            response = session.get(self.url)
+            content = response.content
+
+        return content
+
+    def _parse_page(self, page: bytes = None, session: requests.Session = None):
+        if page is None:
+            page = self._get_page(session=session)
+
+        soup = BeautifulSoup(page, 'lxml')
+        viewport = soup.find('div', 'viewport')
+        try:
+            main = viewport.div.contents[1].find_all('div', 'g-row', recursive=False)[-1]
+        except AttributeError:
+            return {}
+
+        name = main.find('h1', id='ad-title').text
+        name = re.sub(r'\s+', ' ', name).strip()
+
+        price = main.find('span', attrs={'data-testid': 'prime-price'}).text
+        price = int(re.sub(r'\D+', '', price))
+
+        try:
+            vat = main.find('span', attrs={'data-testid': 'vat'}).text
+            vat = round(
+                float(re.sub(r'[^\d,.]+|^[.,]|[.,]$', '', vat).replace(',', '.'))
+            )
+        except (AttributeError, ValueError):
+            vat = None
+
+        img_el = main.find('img')
+        try:
+            image_url = img_el.get('src') or img_el.get('data-src')
+            if image_url.startswith('//'):
+                image_url = 'https:' + image_url
+            image_url = re.sub(r'\$_\d+', '$_10', image_url)
+        except AttributeError:
+            image_url = None
+
+        data = {
+            'name': name,
+            'price': price,
+            'vat': vat,
+            # 'description': description, ??
+            'image_url': image_url,
+        }
+
+        return data
+
+    def renew_data(self):
+        page = self._get_page()
+        data = self._parse_page(page)
+        for key, value in data.items():
+            setattr(self, key, value)
+        self.save()
 
 
 @receiver(pre_delete, sender=Search)
