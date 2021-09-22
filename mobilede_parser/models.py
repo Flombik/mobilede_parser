@@ -3,7 +3,7 @@ import re
 from collections import defaultdict
 from contextlib import suppress
 from math import ceil
-from typing import Dict, List, Union, Any
+from typing import Any, Dict, List, Union
 
 import requests
 from bs4 import BeautifulSoup
@@ -11,7 +11,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.db.models import Value, F
+from django.db.models import F, Value
 from django.db.models.functions import Ceil
 from django.db.models.signals import pre_delete
 from django.db.transaction import atomic
@@ -20,6 +20,13 @@ from django.utils import timezone
 from furl import furl
 
 DB_CHUNK_SIZE = 5000
+
+
+def get_headers_for_request() -> Dict[str, Union[str, int]]:
+    headers = {
+        'User-Agent': random.choice(settings.PARSER_USER_AGENTS_LIST),
+    }
+    return headers
 
 
 class ParametersValidationError(Exception):
@@ -53,7 +60,10 @@ class QueryParametersMixin(models.Model):
                 params[key].append(value)
             else:
                 params.setdefault('key')
-        params = {key: None if not value else value[0] if len(value) == 1 else value for key, value in params.items()}
+        params = {
+            key: None if not value else value[0] if len(value) == 1 else value
+            for key, value in params.items()
+        }
         return url, params
 
     def _validate_params(self, params: dict):
@@ -80,7 +90,17 @@ class QueryParametersMixin(models.Model):
         self.parameters = params
 
 
-class Search(QueryParametersMixin):
+class SessionMixin(object):
+    def __init__(self):
+        self.__session = requests.Session()
+
+    @property
+    def _session(self) -> requests.Session:
+        self.__session.headers.update(get_headers_for_request())
+        return self.__session
+
+
+class Search(QueryParametersMixin, SessionMixin):
     root_url = 'https://suchen.mobile.de/fahrzeuge/search.html'
     single_value_fields = (
         'adLimitation',
@@ -167,9 +187,7 @@ class Search(QueryParametersMixin):
         'isSearchRequest': 'true',
         'lang': 'en',
     }
-    excluding_params = (
-        'pageNumber',
-    )
+    excluding_params = ('pageNumber',)
 
     name = models.CharField(max_length=1024)
     subscribers = models.ManyToManyField(get_user_model(), blank=True)
@@ -177,27 +195,13 @@ class Search(QueryParametersMixin):
     created_at = models.DateTimeField('creation date', auto_now_add=True)
     updated_at = models.DateTimeField('last updated', auto_now=True)
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.__session = requests.Session()
-
-    @property
-    def _session(self) -> requests.Session:
-        self.__session.headers.update(self._get_headers_for_request())
-        return self.__session
-
     def __str__(self):
         return self.name
 
-    @staticmethod
-    def _get_headers_for_request() -> Dict[str, Union[str, int]]:
-        headers = {
-            'User-Agent': random.choice(settings.PARSER_USER_AGENTS_LIST),
-        }
-        return headers
-
-    def _get_num_of_pages(self) -> int:
-        response = self._session.get(self.url)
+    def _get_num_of_pages(self, session: requests.Session = None) -> int:
+        if session is None:
+            session = self._session
+        response = session.get(self.url)
         response.raise_for_status()
 
         soup = BeautifulSoup(response.content, 'lxml')
@@ -212,8 +216,10 @@ class Search(QueryParametersMixin):
             return 1
         return max_page
 
-    def _get_page_by_num(self, page_num: int) -> bytes:
-        response = self._session.get(self.url, params={'pageNumber': page_num})
+    def _get_page_by_num(self, page_num: int, session: requests.Session = None) -> bytes:
+        if session is None:
+            session = self._session
+        response = session.get(self.url, params={'pageNumber': page_num})
         response.raise_for_status()
 
         return response.content
@@ -231,7 +237,12 @@ class Search(QueryParametersMixin):
             headline_block = ad.find('div', 'headline-block')
 
             headline_block = headline_block.find_all('span')
-            headline_block = list(filter(lambda span: {'new-headline-label'} - set(span.get('class')), headline_block))
+            headline_block = list(
+                filter(
+                    lambda span: {'new-headline-label'} - set(span.get('class')),
+                    headline_block,
+                )
+            )
 
             try:
                 name, date = headline_block
@@ -314,7 +325,7 @@ class Search(QueryParametersMixin):
         return list(self.ad_set.all())
 
 
-class Ad(models.Model):
+class Ad(models.Model, SessionMixin):
     site_id = models.IntegerField(primary_key=True, db_index=True)
     url = models.URLField(max_length=2048, null=False)
 
@@ -334,9 +345,7 @@ class Ad(models.Model):
         return self.name
 
     @property
-    @admin.display(
-        ordering=Ceil(F('price') - F('price') * F('vat') / Value(100))
-    )
+    @admin.display(ordering=Ceil(F('price') - F('price') * F('vat') / Value(100)))
     def price_net(self) -> int:
         return ceil(self.price * (1 - self.vat / 100))
 
