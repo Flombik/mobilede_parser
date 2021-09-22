@@ -6,8 +6,8 @@ services:
     ports:
       - "80:80"
     volumes:
-      - staticfiles:/usr/src/app/staticfiles/
-      - ./nginx_conf:/etc/nginx/conf.d/
+      - staticfiles:/usr/src/app/staticfiles
+      - ./nginx_conf:/etc/nginx/conf.d
     restart: unless-stopped
     depends_on:
       - web
@@ -18,7 +18,7 @@ services:
     command: ./web-entrypoint.sh
     volumes:
       - .:/code
-      - staticfiles:/code/staticfiles/
+      - staticfiles:/code/staticfiles
     env_file:
       - .env
     restart: unless-stopped
