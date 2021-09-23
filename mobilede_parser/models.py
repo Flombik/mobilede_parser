@@ -381,6 +381,7 @@ class Ad(QueryParametersMixin, SessionMixin):
             webdriver_options = ChromeOptions()
             webdriver_options.add_argument('--headless')
             webdriver_options.add_argument('--no-sandbox')
+            webdriver_options.add_argument('--disable-dev-shm-usage')
             # webdriver_options.add_argument("--window-size=854,480")
             webdriver_options.add_argument(
                 "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36"
