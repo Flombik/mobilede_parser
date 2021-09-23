@@ -64,16 +64,25 @@ class TelegramUser(AbstractBaseUser, PermissionsMixin):
         """Return the short name for the user."""
         return self.first_name
 
-    def notify(self, message: str, **kwargs):
+    def notify(self, message: str, image_url: str = None, *args, **kwargs):
         """Send a telegram message via bot to this user."""
         message_parse_mode = kwargs.get('parse_mode') or 'MarkdownV2'
 
-        request_url = f'https://api.telegram.org/bot{settings.TELEGRAM_BOT_TOKEN}/sendMessage'
-        request_data = {
-            'chat_id': self.telegram_id,
-            'text': message,
-            'parse_mode': message_parse_mode,
-        }
+        if image_url is None:
+            request_url = f'https://api.telegram.org/bot{settings.TELEGRAM_BOT_TOKEN}/sendMessage'
+            request_data = {
+                'chat_id': self.telegram_id,
+                'text': message,
+                'parse_mode': message_parse_mode,
+            }
+        else:
+            request_url = f'https://api.telegram.org/bot{settings.TELEGRAM_BOT_TOKEN}/sendPhoto'
+            request_data = {
+                'chat_id': self.telegram_id,
+                'photo': image_url,
+                'caption': message,
+                'parse_mode': message_parse_mode,
+            }
 
         response = requests.post(request_url, json=request_data)
         response.raise_for_status()

@@ -20,6 +20,7 @@ from django.db.transaction import atomic
 from django.dispatch import receiver
 from django.utils import timezone
 from furl import furl
+from telegram_user.tasks import notify_user as async_notify_user
 
 try:
     import selenium
@@ -31,6 +32,8 @@ else:
     SELENIUM_IS_AVAILABLE = True
 
 DB_CHUNK_SIZE = 5000
+
+MESSAGE_TEMPLATE = r"We found new car from your favorites searches\! Here is [link]({ad_link}) for the ad\."
 
 
 def get_headers_for_request() -> Dict[str, Union[str, int]]:
@@ -323,6 +326,12 @@ class Search(QueryParametersMixin, SessionMixin):
             new_ads = [Ad(**ad) for ad in ads_chunk if ad.get('site_id') not in existed_ads_ids]
             for ad in new_ads:
                 ad_to_search_links.append(Ad.searches.through(ad_id=ad.site_id, search_id=self.id))
+                for user_id in self.subscribers.values_list('id', flat=True):
+                    async_notify_user.delay(
+                        user_id,
+                        MESSAGE_TEMPLATE.format(ad_link=ad.url),
+                        image_url=ad.image_url,
+                    )
 
             Ad.objects.bulk_create(new_ads, DB_CHUNK_SIZE)
             Ad.searches.through.objects.bulk_create(ad_to_search_links, DB_CHUNK_SIZE, ignore_conflicts=True)
