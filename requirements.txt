@@ -4,3 +4,6 @@ requests
 django
 furl
 selenium
+celery[redis]
+django-celery-beat
+django-celery-results

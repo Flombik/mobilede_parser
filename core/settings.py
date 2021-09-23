@@ -39,7 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    # celery
+    'django_celery_results',
+    'django_celery_beat',
+    # apps
     'telegram_user',
     'mobilede_parser',
 ]
@@ -131,6 +134,14 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Celery settings
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+# Parser settings
 
 PARSER_USER_AGENTS_LIST = [
     # Chrome
