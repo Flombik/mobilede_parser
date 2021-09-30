@@ -4,3 +4,4 @@ requests
 django
 furl
 selenium
+python-telegram-bot[ujson]

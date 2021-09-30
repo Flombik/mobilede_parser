@@ -1,26 +1,14 @@
-from functools import cache
-
-import requests
-from django.conf import settings
 from django.contrib.auth.views import LoginView
+
+from telegram_bot import bot
 
 
 # TODO: refactoring. do something with:
-#       <telegram_user.views.TelegramUserLoginView.get_telegram_bot_data>
 #       <telegram_user.views.TelegramUserLoginView.get_telegram_bot_username>
 #       <telegram_user.views.TelegramUserLoginView.TelegramUserLoginView.get_context_data>
 
-@cache
-def get_telegram_bot_data():
-    response = requests.get(f'https://api.telegram.org/bot{settings.TELEGRAM_BOT_TOKEN}/getMe')
-    response.raise_for_status()
-    response = response.json()
-    return response['result']
-
-
-@cache
 def get_telegram_bot_username():
-    return get_telegram_bot_data()['username']
+    return bot.bot['username']
 
 
 class TelegramUserLoginView(LoginView):

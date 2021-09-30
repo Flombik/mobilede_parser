@@ -1,10 +1,9 @@
-import requests
-from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from telegram_bot import bot
 from .managers import TelegramUserManager
 
 
@@ -67,13 +66,4 @@ class TelegramUser(AbstractBaseUser, PermissionsMixin):
     def notify(self, message: str, **kwargs):
         """Send a telegram message via bot to this user."""
         message_parse_mode = kwargs.get('parse_mode') or 'MarkdownV2'
-
-        request_url = f'https://api.telegram.org/bot{settings.TELEGRAM_BOT_TOKEN}/sendMessage'
-        request_data = {
-            'chat_id': self.telegram_id,
-            'text': message,
-            'parse_mode': message_parse_mode,
-        }
-
-        response = requests.post(request_url, json=request_data)
-        response.raise_for_status()
+        bot.send_message(self.telegram_id, message, message_parse_mode)
