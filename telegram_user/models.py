@@ -3,7 +3,6 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from telegram_bot import bot
 from .managers import TelegramUserManager
 
 
@@ -65,5 +64,7 @@ class TelegramUser(AbstractBaseUser, PermissionsMixin):
 
     def notify(self, message: str, **kwargs):
         """Send a telegram message via bot to this user."""
+        from telegram_bot.bot import bot as tg_bot
+
         message_parse_mode = kwargs.get('parse_mode') or 'MarkdownV2'
-        bot.send_message(self.telegram_id, message, message_parse_mode)
+        tg_bot.send_message(self.telegram_id, message, message_parse_mode)

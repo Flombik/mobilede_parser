@@ -1,14 +1,14 @@
 from django.contrib.auth.views import LoginView
 
-from telegram_bot import bot
-
 
 # TODO: refactoring. do something with:
 #       <telegram_user.views.TelegramUserLoginView.get_telegram_bot_username>
 #       <telegram_user.views.TelegramUserLoginView.TelegramUserLoginView.get_context_data>
 
 def get_telegram_bot_username():
-    return bot.bot['username']
+    from telegram_bot.bot import bot as tg_bot
+
+    return tg_bot.bot['username']
 
 
 class TelegramUserLoginView(LoginView):
