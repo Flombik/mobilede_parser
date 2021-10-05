@@ -26,7 +26,6 @@ services:
     working_dir: /code
     command: ./web-entrypoint.sh
     volumes:
-      - .:/code
       - staticfiles:/code/staticfiles
     env_file:
       - .env
