@@ -26,7 +26,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'default_secret')
 TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN', 'telegram_bot_token')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'false').lower() in ['1', 'true']
 
 ALLOWED_HOSTS = ['localhost', 'localhost.com']
 

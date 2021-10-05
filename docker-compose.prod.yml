@@ -2,9 +2,7 @@ version: "3.8"
 
 services:
   nginx:
-    build:
-      context: .
-      dockerfile: Dockerfile-nginx
+    image: "${NGINX_IMAGE}"
     ports:
       - "80:80"
     volumes:
@@ -14,9 +12,7 @@ services:
       - web
 
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: "${WEB_IMAGE}"
     working_dir: /code
     command: ./web-entrypoint.sh
     volumes:
@@ -25,19 +21,6 @@ services:
     env_file:
       - .env
     restart: unless-stopped
-    depends_on:
-      - db
-
-  db:
-    image: postgres
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
-    volumes:
-      - db_data:/var/lib/postgresql/data
-    restart: unless-stopped
 
 volumes:
-  db_data:
   staticfiles:

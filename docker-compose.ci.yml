@@ -5,6 +5,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-nginx
+      cache_from:
+        - "${NGINX_IMAGE}"
+    image: "${NGINX_IMAGE}"
     ports:
       - "80:80"
     volumes:
@@ -17,6 +20,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      cache_from:
+        - "${WEB_IMAGE}"
+    image: "${WEB_IMAGE}"
     working_dir: /code
     command: ./web-entrypoint.sh
     volumes:
@@ -25,19 +31,6 @@ services:
     env_file:
       - .env
     restart: unless-stopped
-    depends_on:
-      - db
-
-  db:
-    image: postgres
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
-    volumes:
-      - db_data:/var/lib/postgresql/data
-    restart: unless-stopped
 
 volumes:
-  db_data:
   staticfiles:
