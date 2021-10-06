@@ -28,7 +28,7 @@ TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN', 'telegram_bot_token')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'false').lower() in ['1', 'true']
 
-ALLOWED_HOSTS = ['localhost', 'localhost.com']
+ALLOWED_HOSTS = ['localhost', 'localhost.com', '18.193.159.20', 'ec2-18-193-159-20.eu-central-1.compute.amazonaws.com']
 
 # Application definition
 
