@@ -2,6 +2,7 @@ import logging
 from typing import Dict
 
 from django.core.management.base import BaseCommand
+from django.db.utils import IntegrityError
 from telegram import ReplyKeyboardMarkup, Update, ReplyKeyboardRemove
 from telegram.ext import (
     CommandHandler,
@@ -10,10 +11,9 @@ from telegram.ext import (
     ConversationHandler,
     CallbackContext,
 )
-from telegram_user.models import TelegramUser
 
-from ...bot import updater, dispatcher
-from django.db.utils import IntegrityError
+from telegram_user.models import TelegramUser
+from ...bot import Bot
 
 # Enable logging
 logging.basicConfig(
@@ -49,10 +49,10 @@ def start(update: Update, context: CallbackContext) -> int:
             telegram_id=user_id,
             **{k: v for k, v in user.items()
                if k in [
-                'username',
-                'first_name',
-                'last_name'
-            ]}
+                   'username',
+                   'first_name',
+                   'last_name'
+               ]}
         )
     except IntegrityError:
         TelegramUser.objects.get(telegram_id=user_id).delete()
@@ -171,18 +171,20 @@ def main() -> None:
         persistent=True,
     )
 
-    dispatcher.add_handler(conv_handler)
+    tg_bot = Bot()
+
+    tg_bot.add_handler(conv_handler)
 
     show_data_handler = CommandHandler('show_data', show_data)
-    dispatcher.add_handler(show_data_handler)
+    tg_bot.add_handler(show_data_handler)
 
     # Start the Bot
-    updater.start_polling()
+    tg_bot.start_polling()
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
     # start_polling() is non-blocking and will stop the bot gracefully.
-    updater.idle()
+    tg_bot.idle()
 
 
 class Command(BaseCommand):
