@@ -30,4 +30,9 @@ RUN apt update && \
     apt install -y --no-install-recommends netcat && \
     apt clean
 
+RUN addgroup --gid 1001 --system app && \
+    adduser --no-create-home --shell /bin/false --disabled-password --uid 1001 --system --group app
+
 COPY . .
+
+USER app
