@@ -23,7 +23,6 @@ services:
       cache_from:
         - "${WEB_IMAGE}"
     image: "${WEB_IMAGE}"
-    working_dir: /code
     command: ./web-entrypoint.sh
     volumes:
       - staticfiles:/code/staticfiles

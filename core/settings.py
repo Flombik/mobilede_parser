@@ -108,6 +108,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REMOTE_WEBDRIVER_URL = os.getenv('REMOTE_WEBDRIVER_URL', 'http://localhost:4444/wd/hub')
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 

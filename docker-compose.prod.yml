@@ -13,13 +13,16 @@ services:
 
   web:
     image: "${WEB_IMAGE}"
-    working_dir: /code
     command: ./web-entrypoint.sh
     volumes:
       - staticfiles:/code/staticfiles
     env_file:
       - .env
     restart: unless-stopped
+
+  standalone-chrome:
+    image: selenium/standalone-chrome
+    shm_size: "2g"
 
 volumes:
   staticfiles:

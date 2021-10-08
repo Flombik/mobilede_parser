@@ -5,6 +5,7 @@ from math import ceil
 import requests
 from bs4 import BeautifulSoup
 from django.contrib import admin
+from django.conf import settings
 from django.db import models
 from django.db.models import F, Value
 from django.db.models.functions import Ceil
@@ -23,6 +24,7 @@ else:
     SELENIUM_IS_AVAILABLE = True
 
 DB_CHUNK_SIZE = 5000
+REMOTE_WEBDRIVER_URL = settings.REMOTE_WEBDRIVER_URL
 
 
 class Ad(QueryParametersModelBase, SessionMixin):
@@ -63,7 +65,7 @@ class Ad(QueryParametersModelBase, SessionMixin):
             webdriver_options.add_argument(
                 "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36"
             )
-            with Chrome(options=webdriver_options) as webdriver:
+            with selenium.webdriver.Remote(REMOTE_WEBDRIVER_URL, options=webdriver_options) as webdriver:
                 # webdriver.set_window_size(854,480)
                 webdriver.get(self.url)
                 time.sleep(4)

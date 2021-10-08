@@ -17,7 +17,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    working_dir: /code
     command: ./web-entrypoint.sh
     volumes:
       - .:/code
@@ -37,6 +36,10 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     restart: unless-stopped
+
+  standalone-chrome:
+    image: selenium/standalone-chrome
+    shm_size: "2g"
 
 volumes:
   db_data:
