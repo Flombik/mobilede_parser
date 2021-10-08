@@ -13,6 +13,6 @@ fi
 
 #python manage.py makemigrations
 python manage.py migrate
-gunicorn core.wsgi:application --reload --bind 0.0.0.0:8000
+gunicorn --worker-tmp-dir /dev/shm core.wsgi:application --reload --bind 0.0.0.0:8000
 
 exec "$@"
