@@ -1,8 +1,8 @@
 import logging
+from collections import namedtuple
 from typing import Dict
 
 from django.core.management.base import BaseCommand
-from django.db.utils import IntegrityError
 from telegram import ReplyKeyboardMarkup, Update, ReplyKeyboardRemove
 from telegram.ext import (
     CommandHandler,
@@ -38,33 +38,41 @@ def facts_to_str(user_data: Dict[str, str]) -> str:
     return "\n".join(facts).join(['\n', '\n'])
 
 
+def prepare_db_user(update: Update, context: CallbackContext) -> TelegramUser:
+    default_info_list = [
+        'username',
+        'first_name',
+        'last_name'
+    ]
+    tg_user = update.effective_user.to_dict()
+    tg_id = tg_user.pop('id')
+
+    db_user, created = TelegramUser.objects.get_or_create(
+        telegram_id=tg_id,
+        defaults={k: v for k, v in tg_user.items()
+                  if k in default_info_list}
+    )
+
+    def check_attrs(attr_list: list, first, second):
+        for attr_ in attr_list:
+            if getattr(first, attr_) != getattr(second, attr_):
+                return False
+        return True
+
+    if not created and not check_attrs(default_info_list, namedtuple('tg_user', tg_user)(**tg_user), db_user):
+        for attr, value in tg_user.items():
+            if attr in default_info_list:
+                setattr(db_user, attr, value)
+        db_user.save()
+
+    return db_user
+
+
 def start(update: Update, context: CallbackContext) -> int:
     """Start the conversation, display any stored data and ask user for input."""
     reply_text = "Hi! My name is Doctor Botter."
-    user = update.effective_user.to_dict()
-    user_id = user.pop('id')
 
-    try:
-        TelegramUser.objects.update_or_create(
-            telegram_id=user_id,
-            **{k: v for k, v in user.items()
-               if k in [
-                   'username',
-                   'first_name',
-                   'last_name'
-               ]}
-        )
-    except IntegrityError:
-        TelegramUser.objects.get(telegram_id=user_id).delete()
-        TelegramUser.objects.update_or_create(
-            telegram_id=user_id,
-            **{k: v for k, v in user.items()
-               if k in [
-                   'username',
-                   'first_name',
-                   'last_name'
-               ]}
-        )
+    db_user = prepare_db_user(update, context)
 
     if context.user_data:
         reply_text += (
