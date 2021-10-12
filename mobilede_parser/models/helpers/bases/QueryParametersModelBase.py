@@ -13,16 +13,23 @@ class QueryParametersModelBase(models.Model):
     class Meta:
         abstract = True
 
+    class QueryParametersQuerySet(models.QuerySet):
+        def filter(self, *args, **kwargs):
+            url = kwargs.pop('url', None)
+            if url is not None and 'parameters' not in kwargs:
+                params = self.model.parse_and_validate_url(url)
+                kwargs['parameters'] = params
+
+            return super().filter(*args, **kwargs)
+
+    objects = QueryParametersQuerySet.as_manager()
+
     root_url = ''
     single_value_fields = ()
     multiple_value_fields = ()
 
     overriding_params = {}
     excluding_params = ()
-
-    @property
-    def fields(self):
-        return self.single_value_fields + self.multiple_value_fields
 
     parameters = models.JSONField(default=dict)
 
@@ -41,12 +48,23 @@ class QueryParametersModelBase(models.Model):
         }
         return url, params
 
-    def _validate_params(self, params: dict):
+    @classmethod
+    def _validate_params(cls, params: dict):
         for key, value in params.items():
-            if key not in self.fields:
+            if key not in cls.single_value_fields + cls.multiple_value_fields:
                 raise ParametersValidationError(f'Parameter "{key}" is not allowed.')
-            if key in self.single_value_fields and type(value) is list:
+            if key in cls.single_value_fields and type(value) is list:
                 raise ParametersValidationError(f'Value of parameter "{key}" must be single.')
+
+    @classmethod
+    def parse_and_validate_url(cls, url):
+        url, params = cls._parse_url(url)
+        if furl(cls.root_url).origin != url.origin:
+            raise ParametersValidationError('URL origin must match root URL.')
+        cls._validate_params(params)
+        for param in cls.excluding_params + tuple(cls.overriding_params.keys()):
+            params.pop(param, None)
+        return params
 
     @property
     def url(self) -> str:
@@ -58,8 +76,5 @@ class QueryParametersModelBase(models.Model):
 
     @url.setter
     def url(self, url):
-        url, params = self._parse_url(url)
-        if furl(self.root_url).origin != url.origin:
-            raise ParametersValidationError('URL origin must match root URL.')
-        self._validate_params(params)
+        params = self.parse_and_validate_url(url)
         self.parameters = params
